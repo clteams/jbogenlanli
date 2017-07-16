@@ -60,10 +60,10 @@ sumti_4		<- t:sumti_5 {$$=t;}
 		 / j:gek S:sumti m1:GI N:NAI t:sumti_4 {$$=new opconn(j->modify(N,NULL,m1),S,t);}
 sumti_5		<- quantifier? sumti_6 relative_clauses? 
 		 / quantifier selbri (KU fm? )? relative_clauses?
-sumti_6		<- (LAhE fm? / NAhE BO fm?) relative_clauses? sumti (LUhU fm? )? 
+sumti_6		<- (LAhE / NAhE BO) relative_clauses? sumti (LUhU fm? )? 
 		 / KOhA fm?
 		 / lerfu_string (BOI fm? )?
-		 / LA fm? relative_clauses? CMENE+ fm? 
+		 / LA relative_clauses? CMENE+
 		 / (LA / LE) fm? sumti_tail (KU fm? )?
 		 / LI fm? mex (LOhO fm? )? 
 		 / ZO any_word fm?
