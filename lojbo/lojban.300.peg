@@ -61,56 +61,56 @@ sumti_4		<- t:sumti_5 {$$=t;}
 sumti_5		<- quantifier? sumti_6 relative_clauses? 
 		 / quantifier selbri (KU fm? )? relative_clauses?
 sumti_6		<- (LAhE / NAhE BO) relative_clauses? sumti (LUhU fm? )? 
-		 / KOhA fm?
+		 / KOhA
 		 / lerfu_string (BOI fm? )?
 		 / LA relative_clauses? CMENE+
-		 / (LA / LE) fm? sumti_tail (KU fm? )?
-		 / LI fm? mex (LOhO fm? )? 
-		 / ZO any_word fm?
+		 / (LA / LE) sumti_tail (KU fm? )?
+		 / LI mex (LOhO fm? )? 
+		 / ZO any_word
 		 / LU text (LIhU fm? )?
-		 / LOhU any_word+ LEhU fm? 
-		 / ZOI <any_word> <(!($1).)*> $1 fm?
+		 / LOhU any_word+ LEhU 
+		 / ZOI <any_word> <(!($1).)*> $1
 sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
 		 / relative_clauses sumti_tail_1
 sumti_tail_1	<- quantifier? selbri relative_clauses? / quantifier sumti
-relative_clauses<- relative_clauses ZIhE fm? relative_clause
+relative_clauses<- relative_clauses ZIhE relative_clause
 		 / t:relative_clause {$$=t;}
-relative_clause	<- GOI fm? term (GEhU fm? )? / NOI fm? subsentence (KUhO fm? )?
+relative_clause	<- GOI term (GEhU fm? )? / NOI subsentence (KUhO fm? )?
 selbri		<- t:tag? s:selbri_1 {$$=t?new tagged(t,s):s;}
 selbri_1	<- s:selbri_2 {$$=s;}
 		 / N:NA s:selbri {$$=new tagged(N,s,f);}
-selbri_2	<- selbri_3 CO fm? selbri_2
+selbri_2	<- selbri_3 CO selbri_2
 		 / t:selbri_3 {$$=t;}
 selbri_3	<- S:selbri_3 t:selbri_4 {$$=new opconn(NULL,S,t);}
 		 / t:selbri_4 {$$=t;}
 selbri_4	<- S:selbri_4 j:joik_jek t:selbri_5 {$$=new opconn(j,S,t);} 
-		 / t:selbri_4 j:joik T:stag? m1:KE f1:fm? S:selbri_3 (m2:KEhE f2:fm? )? {$$=new opconn(j->modify(NULL,T,f1(f2),m1,m2),t,S);}
+		 / t:selbri_4 j:joik T:stag? m1:KE S:selbri_3 (m2:KEhE f2:fm? )? {$$=new opconn(j->modify(NULL,T,f1(f2),m1,m2),t,S);}
 		 / t:selbri_5 {$$=t;}
 selbri_5	<- t:selbri_6 (j:jek / j:joik) T:stag? m1:BO S:selbri_5 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
 		 / t:selbri_6 {$$=t;}
 selbri_6	<- t:tanru_unit m1:BO S:selbri_6 {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),t,S);}
 		 / (NAhE fm?)? guhek selbri m1:GI N:NAI selbri_6
 		 / t:tanru_unit {$$=t;}
-tanru_unit	<- tanru_unit CEI fm? tanru_unit_1
+tanru_unit	<- tanru_unit CEI tanru_unit_1
 		 / t:tanru_unit_1 {$$=t;}
 tanru_unit_1	<- tanru_unit_2 linkargs?
-tanru_unit_2	<- BRIVLA fm? 
+tanru_unit_2	<- BRIVLA 
 		 / g:GOhA r:RAhO? 
-		 / KE fm? selbri_3 (KEhE fm? )? 
-		 / ME fm? sumti (MEhU fm? )? (MOI fm?)? / (number / lerfu_string) MOI fm? 
-		 / NUhA fm? mex_operator
+		 / KE selbri_3 (KEhE fm? )? 
+		 / ME sumti (MEhU fm? )? (MOI fm?)? / (number / lerfu_string) MOI 
+		 / NUhA mex_operator
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);} 
 		 / any_word (ZEI any_word)+
 		 / N:NAhE s:tanru_unit_2 {$$=new tagged(N,s,f);}
 		 / nu subsentence (KEI fm? )?
-nu		<- nu joik_jek NU NAI? fm? 
-		 / NU NAI? fm?
-linkargs	<- BE fm? term links? (BEhO fm? )?
-links		<- BEI fm? term links?
-quantifier	<- number (BOI fm? )? / VEI fm? mex (VEhO fm? )?
+nu		<- nu joik_jek NU NAI? 
+		 / NU NAI?
+linkargs	<- BE term links? (BEhO fm? )?
+links		<- BEI term links?
+quantifier	<- number (BOI fm? )? / VEI mex (VEhO fm? )?
 mex		<- m:mex_0 {$$=m;}
-		 / FUhA fm? rp_expression
+		 / FUhA rp_expression
 mex_0		<- S:mex_0 j:operator t:mex_1 {$$=new opconn(j,S,t);}
 		 / t:mex_1 {$$=t;}
 mex_1		<- t:mex_2 m1:BIhE j:operator S:mex_1 {$$=new opconn(j->modify(NULL,NULL,f,m1),t,S);}
@@ -123,24 +123,24 @@ rp_expression	<- S:rp_operand t:rp_operand j:operator {$$=new opconn(j,S,t);}
 rp_operand	<- t:operand {$$=t;}
 		 / t:rp_expression {$$=t;}
 operator	<- S:operator j:joik_jek t:operator_1 {$$=new opconn(j,S,t);}
-		 / t:operator j:joik T:stag? m1:KE f1:fm? S:operator (m2:KEhE f2:fm? )? {$$=new opconn(j->modify(NULL,T,f1(f2),m1,m2),t,S);}
+		 / t:operator j:joik T:stag? m1:KE S:operator (m2:KEhE f2:fm? )? {$$=new opconn(j->modify(NULL,T,f1(f2),m1,m2),t,S);}
 		 / t:operator_1 {$$=t;}
 operator_1	<- guhek operator_1 m1:GI N:NAI operator_2 
 		 / t:operator_2 (j:jek / j:joik) T:stag? m1:BO S:operator_1 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
 		 / t:operator_2 {$$=t;}
-operator_2	<- mex_operator / KE fm? operator (KEhE fm? )?
-mex_operator	<- SE fm? mex_operator / NAhE fm? mex_operator 
-		 / MAhO fm? mex (TEhU fm? )? / NAhU fm? selbri (TEhU fm? )? / VUhU fm?
-operand		<- t:operand_1 (j:ek / j:joik) T:stag? m1:KE f1:fm? S:operand (m2:KEhE f2:fm? )?  {$$=new opconn(j->modify(NULL,T,f1(f2),m1,m2),t,S);}
+operator_2	<- mex_operator / KE operator (KEhE fm? )?
+mex_operator	<- SE mex_operator / NAhE mex_operator 
+		 / MAhO mex (TEhU fm? )? / NAhU selbri (TEhU fm? )? / VUhU
+operand		<- t:operand_1 (j:ek / j:joik) T:stag? m1:KE S:operand (m2:KEhE f2:fm? )?  {$$=new opconn(j->modify(NULL,T,f1(f2),m1,m2),t,S);}
 		 / t:operand_1 {$$=t;}
 operand_1	<- S:operand_1 j:joik_ek t:operand_2 {$$=new opconn(j,S,t);}
 		 / t:operand_2 {$$=t;}
-operand_2	<- t:operand_3 (j:ek / j:joik) T:stag? m1:BO f:fm? S:operand_2 {$$=new opconn(j->modify(NULL,T,f,m1),t,S);}
+operand_2	<- t:operand_3 (j:ek / j:joik) T:stag? m1:BO S:operand_2 {$$=new opconn(j->modify(NULL,T,f,m1),t,S);}
 		 / t:operand_3 {$$=t;}
 operand_3	<- quantifier / lerfu_string (BOI fm? )? 
-		 / NIhE fm? selbri (TEhU fm? )? / MOhE fm? sumti (TEhU fm? )? 
-		 / JOhI fm? mex_2A (TEhU fm? )? / gek operand m1:GI N:NAI f:fm? operand_3 
-		 / (LAhE fm? / NAhE BO fm?) operand (LUhU fm? )?
+		 / NIhE selbri (TEhU fm? )? / MOhE sumti (TEhU fm? )? 
+		 / JOhI mex_2A (TEhU fm? )? / gek operand m1:GI N:NAI operand_3 
+		 / (LAhE / NAhE BO fm?) operand (LUhU fm? )?
 number		<- number (PA / lerfu_word) / PA
 lerfu_string	<- lerfu_string (PA / lerfu_word) / lerfu_word
 lerfu_word	<- BY / any_word BU / LAU lerfu_word / TEI lerfu_string FOI
