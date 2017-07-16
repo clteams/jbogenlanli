@@ -9,7 +9,7 @@ word <- lojban_word {printf(" - lojban word\n");}
       / non_lojban_word {printf(" - nlw\n");}
 lojban_word <- <cmene> {printf("cmene: %s",$1);}
              / <cmavo> {printf("cmavo: %s",$2);}
-	     / <brivla> {printf("brivla: %s",$3);}
+	     / <BRIVLA_> {printf("brivla: %s",$3);}
 BRIVLA_ <- gismu / fuhivla / lujvo
 #___________________________________________________________________
 CMENE_ <- jbocme / zifcme
@@ -138,7 +138,7 @@ BIhE_cmavo		<- "bi'e"
 BIhI_cmavo		<- "mi'i"/"bi'o"/"bi'i"
 BO_cmavo		<- "bo"
 BOI_cmavo		<- "boi"
-#BRIVLA_			<- 
+#BRIVLA_		<- 
 BU_cmavo		<- "bu"
 BY_cmavo		<- "ybu"/"jo'o"/"ru'o"/"ge'o"/"je'o"/"lo'a"/"na'a"/"se'e"/"to'a"/"ga'e"/"y'y"/"by"/"cy"/"dy"/"fy"/"gy"/"jy"/"ky"/"ly"/"my"/"ny"/"py"/"ry"/"sy"/"ty"/"vy"/"xy"/"zy"
 CAhA_cmavo		<- "ca'a"/"pu'i"/"nu'o"/"ka'e"
