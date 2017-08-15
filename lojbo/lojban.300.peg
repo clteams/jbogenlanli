@@ -129,7 +129,7 @@ operator_1	<- guhek operator_1 m1:GI N:NAI operator_2
 		 / t:operator_2 (j:jek / j:joik) T:stag? m1:BO S:operator_1 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
 		 / t:operator_2 {$$=t;}
 operator_2	<- mex_operator / KE operator KEhE?
-mex_operator	<- SE mex_operator / NAhE mex_operator 
+mex_operator	<- (N:SE / N:NAhE) s:mex_operator {$$=new tagged(N,s);}
 		 / MAhO mex TEhU? / NAhU selbri TEhU? / VUhU
 operand		<- t:operand_1 (j:ek / j:joik) T:stag? m1:KE S:operand m2:KEhE?  {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
 		 / t:operand_1 {$$=t;}
