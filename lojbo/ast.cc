@@ -4,12 +4,18 @@
 #include "string.cc"
 #include "mahoste.h"
 
-enum astype {VALSI,OPCONN,TAGGED};
+enum astype {VALSI,OPCONN,TAGGED,INDICATOR/*,SUMTI,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
 	virtual ~ast() {}
 	virtual astype type() =0;
+};
+
+class indicator:public ast {
+	//
+	public:
+	enum astype type() {return INDICATOR;}
 };
 
 class valsi:public ast {
@@ -24,7 +30,7 @@ class valsi:public ast {
 	valsi(const char *const bahecm,const char *const t/*indicators*/) {
 		if (!strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
 		if (dettype(t)==BRIVLA || dettype(t)==CMENE) {type=VLA;ch=t;}
-		else {VLA=CMAVO;cm=dettype(t);}
+		else {type=CMAVO;cm=dettype(t);}
 	}
 	~valsi() {}
 	valsi(const ast& op) {
@@ -40,9 +46,8 @@ class valsi:public ast {
 class opconn:public ast {
 	ast *conn;
 	ast *left,*right;
-	//freemodifier
 	public:
-	opconn(ast *c,ast *l,ast *r,ast *fm):conn(c),left(l),right(r)/*,freemod(fm)*/ {}
+	opconn(ast *c,ast *l,ast *r):conn(c),left(l),right(r) {}
 	~opconn() {
 		//
 		delete left;
@@ -65,14 +70,12 @@ class conn:public ast {
 	ast *misc1=NULL,*misc2=NULL,misc3=NULL,misc4=NULL; //contains gi if conn is forethought,also CO,BO,ZIhE,etc. 
 	ast *se,*nai,*jekjoik;
 	ast *tag;
-	ast *freemod;
 	public:
-	conn(ast *_na,ast *_se,ast *_nai,ast *_jekjoik,ast *_tag,ast *fm,ast *m1=NULL,ast *m2=NULL,ast *m3=NULL,ast *m4=NULL)
-		:na(_na),se(_se),nai(_nai),jekjoik(_jekjoik),tag(_tag),misc1(m1),misc2(m2),misc3(m3),misc4(m4),freemod(fm) {}
-	conn *modify(ast *_nai=NULL,ast *_tag=NULL,ast *_fm,ast *m1=NULL,ast *m2=NULL,ast *m3=NULL,ast *m4=NULL) {
+	conn(ast *_na,ast *_se,ast *_nai,ast *_jekjoik,ast *_tag,ast *m1=NULL,ast *m2=NULL,ast *m3=NULL,ast *m4=NULL)
+		:na(_na),se(_se),nai(_nai),jekjoik(_jekjoik),tag(_tag),misc1(m1),misc2(m2),misc3(m3),misc4(m4) {}
+	conn *modify(ast *_nai=NULL,ast *_tag=NULL,ast *m1=NULL,ast *m2=NULL,ast *m3=NULL,ast *m4=NULL) {
 			if (_nai) nai=_nai;
 			if (_tag) tag=_tag;
-			if (_fm)  freemod=_fm;
 			if (m1) misc1=m1;
 			if (m2) misc2=m2;
 			if (m3) misc3=m3;
@@ -88,7 +91,6 @@ class conn:public ast {
 		if (tag) delete tag;
 		if (misc1) delete misc1;
 		if (misc2) delete misc2;
-		if (freemod) delete freemod;
 	}
 	conn(const ast& op) {
 		//
@@ -98,13 +100,6 @@ class conn:public ast {
 		return *this;
 	}
 	astype type() {return CONN;}
-	/*struct stagtree *stag;
-	struct valsi *na,*se,*nai;
-	unsigned int type;
-	union {
-		struct valsi *jek;
-		struct valsi *joik;
-	};*/
 
 };
 
@@ -112,14 +107,12 @@ class tagged:public ast {
 	ast *tag;
 	ast *subtree;
 	ast *misc1,*misc2;
-	ast *freemod;
 	public:
-	tagged(ast *_tag,ast *_st,ast *_fm,ast *_m1=NULL,ast *_m2=NULL):tag(_tag),subtree(_st),freemod(_fm),misc1(_m1),misc2(_m2) {}
+	tagged(ast *_tag,ast *_st,ast *_m1=NULL,ast *_m2=NULL):tag(_tag),subtree(_st),misc1(_m1),misc2(_m2) {}
 	~tagged() {
 		//
 		delete tag;
 		delete subtree;
-		//delete freemod;
 	}
 	tagged(const ast& op) {
 		//
