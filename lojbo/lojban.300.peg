@@ -178,5 +178,4 @@ free		<- SEI (terms CU?)? selbri SEhU? / SOI sumti sumti? SEhU?
 		 / XI (number / lerfu_string) BOI? / XI VEI mex VEhO?
 vocative	<- (COI NAI?)+ & DOI
 indicators	<- FUhE? indicator+
-indicator	<-  (UI / CAI) NAI? / Y / DAhO / FUhO
-fm		<- fm free
+indicator	<-  (UI / CAI) NAI? / Y / DAhO / FUhO / free
