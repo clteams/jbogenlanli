@@ -79,7 +79,7 @@ relative_clause	<- GOI term GEhU? / NOI subsentence KUhO?
 selbri		<- t:tag? s:selbri_1 {$$=t?new tagged(t,s):s;}
 selbri_1	<- s:selbri_2 {$$=s;}
 		 / N:NA s:selbri {$$=new tagged(N,s);}
-selbri_2	<- selbri_3 CO selbri_2
+selbri_2	<- t:selbri_3 m1:CO S:selbri_2 {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
 		 / t:selbri_3 {$$=t;}
 selbri_3	<- S:selbri_3 t:selbri_4 {$$=new opconn(NULL,S,t);}
 		 / t:selbri_4 {$$=t;}
