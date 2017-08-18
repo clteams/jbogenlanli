@@ -60,12 +60,12 @@ sumti_4		<- t:sumti_5 {$$=t;}
 		 / j:gek S:sumti m1:GI N:NAI t:sumti_4 {$$=new opconn(j->modify(N,NULL,m1),S,t);}
 sumti_5		<- quantifier? sumti_6 relative_clauses? 
 		 / quantifier selbri KU? relative_clauses?
-sumti_6		<- (LAhE / NAhE BO) relative_clauses? sumti LUhU? 
-		 / KOhA
+sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree,m1,m2);}
+		 / t:KOhA {$$=t;}
 		 / lerfu_string BOI?
 		 / LA relative_clauses? CMENE+
 		 / (LA / LE) sumti_tail KU?
-		 / LI mex LOhO? 
+		 / LI mex LOhO? {//where to place "LI" and "LOhO"? In mex->conn->misc1 or maybe create additional subtree in conn?}
 		 / ZO any_word
 		 / LU text LIhU?
 		 / LOhU any_word+ LEhU 
