@@ -58,16 +58,16 @@ sumti_3		<- t:sumti_4 (j:ek / j:joik) T:stag? m1:BO S:sumti_3 {$$=new opconn(j->
 		 / t:sumti_4 {$$=t;}
 sumti_4		<- t:sumti_5 {$$=t;}
 		 / j:gek S:sumti m1:GI N:NAI t:sumti_4 {$$=new opconn(j->modify(N,NULL,m1),S,t);}
-sumti_5		<- quantifier? sumti_6 relative_clauses? 
-		 / quantifier selbri KU? relative_clauses?
+sumti_5		<- q:quantifier? s:sumti_6 c:relative_clauses? {$$=new sumti(s,q,c);}
+		 / q:quantifier s:selbri m1:KU? c:relative_clauses? {/*$$=new sumti(new description([LO],selbri,NULL,NULL,m1),q,c);*/}
 sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree,m1,m2);}
 		 / t:KOhA {$$=t;}
 		 / lerfu_string BOI?
 		 / LA relative_clauses? CMENE+
 		 / (LA / LE) sumti_tail KU?
 		 / LI mex LOhO? {//where to place "LI" and "LOhO"? In mex->conn->misc1 or maybe create additional subtree in conn?}
-		 / ZO any_word
-		 / LU text LIhU?
+		 / t:ZO s:any_word {$$=new tagged(N,s);}
+		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
 		 / LOhU any_word+ LEhU 
 		 / ZOI <any_word> <(!($1).)*> $1
 sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
@@ -95,10 +95,10 @@ tanru_unit	<- tanru_unit CEI tanru_unit_1
 		 / t:tanru_unit_1 {$$=t;}
 tanru_unit_1	<- tanru_unit_2 linkargs?
 tanru_unit_2	<- BRIVLA 
-		 / g:GOhA r:RAhO? 
+		 / g:GOhA r:RAhO?
 		 / KE selbri_3 KEhE? 
 		 / ME sumti MEhU? MOI? / (number / lerfu_string) MOI 
-		 / NUhA mex_operator
+		 / N:NUhA m:mex_operator
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);} 
 		 / any_word (ZEI any_word)+
