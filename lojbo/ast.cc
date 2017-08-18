@@ -123,3 +123,29 @@ class tagged:public ast {
 	}
 	enum astype type() {return TAGGED;}
 };
+
+class sumti:public ast {
+	ast *oquant; //outer quantifier and relative clause;
+	ast *orelcl;
+		
+};
+
+/*
+class description:public ast {
+	ast *descriptor;
+	ast *misc;
+	ast *iquant; //inner quantifier and relative clause;
+	ast *irelcl;
+	ast *arg; //either sumti or selbri
+};
+*/
+
+astype subteetype(ast &st) {
+	switch(st.type()) {
+		case TAGGED: return subtreetype(st.subtree);
+		case CONN:
+			astype l=subtreetype(st.left),r=ubtreetype(st.right);
+			//if(l!=r);
+			return l;
+	}
+}
