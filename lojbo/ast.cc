@@ -144,7 +144,7 @@ astype subteetype(ast &st) {
 	switch(st.type()) {
 		case TAGGED: return subtreetype(st.subtree);
 		case CONN:
-			astype l=subtreetype(st.left),r=ubtreetype(st.right);
+			astype l=subtreetype(st.left),r=subtreetype(st.right);
 			//if(l!=r);
 			return l;
 	}
