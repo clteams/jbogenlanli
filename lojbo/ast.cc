@@ -127,7 +127,7 @@ class tagged:public ast {
 class sumti:public ast {
 	ast *oquant; //outer quantifier and relative clause;
 	ast *orelcl;
-		
+	ast *sumti6; /*sumti6 is either description or tagged or valsi or ...*/	
 };
 
 /*
