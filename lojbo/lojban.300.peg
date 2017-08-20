@@ -43,10 +43,10 @@ terms_1		<- S:terms_1 m1:PEhE j:joik_jek t:terms_2 {$$=new opconn(j->modify(NULL
 		 / t:terms_2 {$$=t;}
 terms_2		<- S:terms_2 m1:CEhE t:term {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
 		 / t:term {$$=t;}
-term		<- t:sumti {$$=t;}
-		 / (tag / FA) (sumti / KU?)
-		 / termset
-		 / NA KU
+term		<- s:sumti {$$=new term(NULL,s);}
+		 / (t:tag / t:FA) (s:sumti / s:KU?) {$$=new term(NULL,s);}
+		 / termset {/*$$=new term(NULL,s);*/}
+		 / N:NA K:KU {$$=new term(N,K);}
 termset		<- NUhI gek terms NUhU? m1:GI N:NAI terms NUhU? 
 		 / NUhI terms NUhU?
 sumti		<- sumti_1 (VUhO relative_clauses)?
