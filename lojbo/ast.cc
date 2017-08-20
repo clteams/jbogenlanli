@@ -4,7 +4,7 @@
 #include "string.cc"
 #include "mahoste.h"
 
-enum astype {VALSI,OPCONN,TAGGED,INDICATOR/*,SUMTI,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -122,6 +122,12 @@ class tagged:public ast {
 		return *this;
 	}
 	enum astype type() {return TAGGED;}
+};
+
+class term:public ast {
+	ast *tag;/*(tag/FA/NA). NULL if none)*/
+	ast *terminator; /*Optional KU*/
+	ast *sumti;
 };
 
 class sumti:public ast {
