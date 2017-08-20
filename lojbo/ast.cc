@@ -126,8 +126,7 @@ class tagged:public ast {
 
 class term:public ast {
 	ast *tag;/*(tag/FA/NA). NULL if none)*/
-	ast *terminator; /*Optional KU*/
-	ast *sumti;
+	ast *sumti; /*or termset or KU*/
 };
 
 class sumti:public ast {
