@@ -4,7 +4,7 @@
 #include "string.cc"
 #include "mahoste.h"
 
-enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -28,7 +28,7 @@ class valsi:public ast {
 	//indicators?
 	public:
 	valsi(const char *const bahecm,const char *const t/*indicators*/) {
-		if (!strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
+		if (!bahecm && !strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
 		if (dettype(t)==BRIVLA || dettype(t)==CMENE) {type=VLA;ch=t;}
 		else {type=CMAVO;cm=dettype(t);}
 	}
@@ -117,7 +117,6 @@ class tagged:public ast {
 			return this;
 	}
 	~tagged() {
-		//
 		delete tag;
 		delete subtree;
 		if (misc1) delete misc1;
@@ -136,30 +135,79 @@ class tagged:public ast {
 class term:public ast {
 	ast *tag;/*(tag/FA/NA). NULL if none)*/
 	ast *sumti; /*or termset or KU*/
+	public:
+	term(ast *_t,ast *_s):tag(_t),sumti(_s) {}
+	~term() {
+		if (tag) delete tag;
+		if (sumti) delete sumti;
+	}
+	term(const ast& op) {
+		//
+	}
+	const term& operator=(const ast& op) {
+		//
+		return *this;
+	}
+	enum astype type() {return TERM;}
 };
 
 class sumti:public ast {
 	ast *oquant; //outer quantifier and relative clause;
 	ast *orelcl;
 	ast *sumti6; /*sumti6 is either description or tagged or valsi or ...*/	
+	public:
+	sumti (ast *s6,ast *_oq,ast *_oc):oquant(_oq),orelcl(_oc),sumti6(s6) {}
+	~sumti() {
+		if (oquant) delete oquant;
+		if (orelcl) delete orelcl;
+		if (sumti6) delete sumti6;
+	}
+	sumti(const ast& op) {
+	        //
+	}
+	const sumti& operator=(const ast& op) {
+	        //
+                return *this;
+	}
+        enum astype type() {return SUMTI;}
 };
 
 class description:public ast {
 	ast *descriptor;
-	ast *misc;
+	ast *misc; //for optional KU 
 	ast *iquant; //inner quantifier and relative clause;
 	ast *irelcl;
 	ast *arg; //either sumti or selbri
 };
 
+class operand:public ast { //pseudo class containing the only subtree opconn [with operands]. That is because both mex and operands might be of class opconn, so it is wrong to consider them as tree and subtree
+	ast *opconn;
+	public:
+	operand(ast *_c):conn(_c) {}
+	~conn() {
+		delete conn;//is never NULL
+	}
+	term(const ast& op) {
+		//
+	}
+	const term& operator=(const ast& op) {
+		conn=op.conn;
+		return *this;
+	}
+	enum astype type() {return OPERAND;}
+
+};
 
 
-astype subteetype(ast &st) {
-	switch(st.type()) {
-		case TAGGED: return subtreetype(st.subtree);
+
+astype subteetype(ast *st) {
+	astype t;
+	switch(t=st->type()) {
+		case TAGGED: return subtreetype(st->subtree);
 		case CONN:
-			astype l=subtreetype(st.left),r=subtreetype(st.right);
+			astype l=subtreetype(st->left),r=subtreetype(st->right);
 			//if(l!=r);
 			return l;
+		default: return t;
 	}
 }

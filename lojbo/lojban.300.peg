@@ -7,14 +7,14 @@ paragraphs	<- paragraph <NIhO+> paragraphs
 paragraph	<- S:paragraph m1:I (t:statement / t:fragment)? {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
 		 / (t:statement / t:fragment) {$$=t;}
 statement	<- t:statement_1 {$$=t;}
-		 / p:prenex s:statement {$$=new tagged(p,s,NULL);}
+		 / p:prenex s:statement {$$=p->modify(NULL,s);} 
 statement_1	<- S:statement_1 m1:I j:joik_jek t:statement_2? {$$=new opconn(j->modify(NULL,NULL,NULL,m1),S,t);}
 		 / t:statement_2 {$$=t;}
 statement_2	<- t:statement_3 m1:I (j:jek / j:joik)? T:stag? m2:BO S:statement_2? {$$=new opconn(j?j->modify(NULL,T,m1,m2):new conn(NULL,NULL,NULL,NULL,T,m1,m2),t,S);}
 		 / t:statement_3 {$$=t;}
 statement_3	<- t:sentence {$$=t;}
 		 / t:tag? TE:TUhE t1:text_1 TU:TUhU? {$$=new tagged(t,t1,TE,TU);}
-fragment	<- e?k
+fragment	<- ek
 		 / gihek
 		 / quantifier
 		 / NA
@@ -33,9 +33,9 @@ bridi_tail_1	<- bridi_tail_1 gihek bridi_tail_2 tail_terms
 bridi_tail_2	<- bridi_tail_3 gihek stag? BO bridi_tail_2 tail_terms
 		 / t:bridi_tail_3 {$$=t;}
 bridi_tail_3	<- selbri tail_terms / gek_sentence
-gek_sentence	<- j:gek S:subsentence m1:GI N:NAI? subsentence tail_terms 
-		 / tag? KE gek_sentence KEhE?
-		 / NA gek_sentence
+gek_sentence	<- j:gek S:subsentence m1:GI N:NAI? t:subsentence tt:tail_terms {$$=new opconn(j->modify(N,NULL,m1),S,t);/*append tt to each bridi_tail in each subsentence */}
+		 / t:tag? m1:KE s:gek_sentence m2:KEhE? {$$=new tagged(t,s,m1,m2);}
+		 / t:NA s:gek_sentence {$$=new tagged(t,s);}
 tail_terms	<- terms? VAU?
 terms		<- S:terms t:terms_1 {$$=new opconn(NULL,S,t);}
 		 / t:terms_1 {$$=t;}
@@ -59,8 +59,8 @@ sumti_3		<- t:sumti_4 (j:ek / j:joik) T:stag? m1:BO S:sumti_3 {$$=new opconn(j->
 sumti_4		<- t:sumti_5 {$$=t;}
 		 / j:gek S:sumti m1:GI N:NAI? t:sumti_4 {$$=new opconn(j->modify(N,NULL,m1),S,t);}
 sumti_5		<- q:quantifier? s:sumti_6 c:relative_clauses? {$$=new sumti(s,q,c);}
-		 / q:quantifier s:selbri m1:KU? c:relative_clauses? {/*$$=new sumti(new description([LO],selbri,NULL,NULL,m1),q,c);*/}
-sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree,m1,m2);}
+		 / q:quantifier s:selbri m1:KU? c:relative_clauses? {$$=new sumti(new description(new valsi(NULL,"lo"/*,NULL*/),selbri,NULL,NULL,m1),q,c);}
+sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree*/,m1,m2);}
 		 / t:KOhA {$$=t;}
 		 / lerfu_string BOI?
 		 / LA relative_clauses? CMENE+
@@ -69,7 +69,7 @@ sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=ne
 		 / t:ZO s:any_word {$$=new tagged(NULL,s,t);}
 		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
 		 / LOhU any_word+ LEhU 
-		 / ZOI <any_word> <(!($1).)*> $1
+		 / ZOI <any_word> <(!($1).)*> $1 
 sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
 		 / relative_clauses sumti_tail_1
 sumti_tail_1	<- quantifier? selbri relative_clauses? / quantifier sumti
@@ -131,8 +131,8 @@ operator_1	<- guhek operator_1 m1:GI N:NAI? operator_2
 operator_2	<- mex_operator / KE operator KEhE?
 mex_operator	<- (N:SE / N:NAhE) s:mex_operator {$$=new tagged(N,s);}
 		 / MAhO mex TEhU? / NAhU selbri TEhU? / VUhU
-operand		<- t:operand_1 (j:ek / j:joik) T:stag? m1:KE S:operand m2:KEhE?  {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
-		 / t:operand_1 {$$=t;}
+operand		<- t:operand_1 (j:ek / j:joik) T:stag? m1:KE S:operand m2:KEhE?  {$$=new operand(new opconn(j->modify(NULL,T,m1,m2),t,S));}
+		 / t:operand_1 {$$=new operand(t);}
 operand_1	<- S:operand_1 j:joik_ek t:operand_2 {$$=new opconn(j,S,t);}
 		 / t:operand_2 {$$=t;}
 operand_2	<- t:operand_3 (j:ek / j:joik) T:stag? m1:BO S:operand_2 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
