@@ -66,7 +66,7 @@ sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=ne
 		 / LA relative_clauses? CMENE+
 		 / (LA / LE) sumti_tail KU?
 		 / LI mex LOhO? {//where to place "LI" and "LOhO"? In mex->conn->misc1 or maybe create additional subtree in conn?}
-		 / t:ZO s:any_word {$$=new tagged(N,s);}
+		 / t:ZO s:any_word {$$=new tagged(NULL,s,t);}
 		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
 		 / LOhU any_word+ LEhU 
 		 / ZOI <any_word> <(!($1).)*> $1
@@ -140,7 +140,7 @@ operand_2	<- t:operand_3 (j:ek / j:joik) T:stag? m1:BO S:operand_2 {$$=new opcon
 operand_3	<- quantifier / lerfu_string BOI? 
 		 / NIhE selbri TEhU? / MOhE sumti TEhU? 
 		 / JOhI mex_2A TEhU? / gek operand m1:GI N:NAI operand_3 
-		 / (LAhE / NAhE BO fm?) operand LUhU?
+		 / (LAhE / NAhE BO) operand LUhU?
 number		<- number (PA / lerfu_word) / PA
 lerfu_string	<- lerfu_string (PA / lerfu_word) / lerfu_word
 lerfu_word	<- BY / any_word BU / LAU lerfu_word / TEI lerfu_string FOI
