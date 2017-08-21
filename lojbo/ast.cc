@@ -109,10 +109,19 @@ class tagged:public ast {
 	ast *misc1,*misc2;
 	public:
 	tagged(ast *_tag,ast *_st,ast *_m1=NULL,ast *_m2=NULL):tag(_tag),subtree(_st),misc1(_m1),misc2(_m2) {}
+	tagged *modify(ast *_t=NULL,ast *_s=NULL,ast *m1=NULL,ast *m2=NULL) {
+			if (_t) tag=_t;
+			if (_s) subtree=_s;
+			if (m1) misc1=m1;
+			if (m2) misc2=m2;
+			return this;
+	}
 	~tagged() {
 		//
 		delete tag;
 		delete subtree;
+		if (misc1) delete misc1;
+		if (misc2) delete misc2;
 	}
 	tagged(const ast& op) {
 		//
@@ -135,7 +144,6 @@ class sumti:public ast {
 	ast *sumti6; /*sumti6 is either description or tagged or valsi or ...*/	
 };
 
-/*
 class description:public ast {
 	ast *descriptor;
 	ast *misc;
@@ -143,7 +151,8 @@ class description:public ast {
 	ast *irelcl;
 	ast *arg; //either sumti or selbri
 };
-*/
+
+
 
 astype subteetype(ast &st) {
 	switch(st.type()) {
