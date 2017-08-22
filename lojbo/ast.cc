@@ -1,10 +1,9 @@
 //#include <stdlib.h>
 //#include <string.h>
 #include <stdarg.h>
-#include "string.cc"
 #include "mahoste.h"
 
-enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -22,7 +21,7 @@ class valsi:public ast {
 	enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
 	enum valsi_type {VLA,CMAVO} type;
 	union {
-		tstring ch;
+		std::string ch;
 		enum cmavo cm;
 	};
 	//indicators?
@@ -196,6 +195,52 @@ class operand:public ast { //pseudo class containing the only subtree opconn [wi
 	}
 	enum astype type() {return OPERAND;}
 
+};
+
+class number:public ast {
+	std::vector<ast *> ll;
+	ast *misc1;
+	public:
+	number(ast *p,ast *m1=NULL):misc1(m1) {ll.push_back(p);}
+	ast *append(ast *l,ast *m1=NULL) {
+		ll.push_back(l);
+		if (!misc1) misc1=m1;
+		return this;
+	}
+	~number() {
+		for(auto m:ll) delete m;
+	}
+	enum astype type() {return NUMBER;}
+};
+
+class lerfustr:public ast {
+	std::vector<ast *> ll;
+	ast *misc1;
+	public:
+	lerfustr(ast *p,ast *m1=NULL):misc1(m1) {ll.push_back(p);}
+	ast *append(ast *l) {
+		ll.push_back(l);
+		if (!misc1) misc1=m1;
+		return this;
+	}
+	~lerfustr() {
+		for(auto m:ll) delete m;
+	}
+	enum astype type() {return LERFUSTR;}
+};
+
+class lerfu:public ast {
+	ast *valsi; /* BY or any_word or lerfu_word or lerfu_string */
+	ast *mod; /* LAU or TEI */
+	ast *misc1; /* FOI / BU */
+	public:
+	lerfu(ast *_v,ast *_m=NULL,ast *m1=NULL):valsi(_v),mod(_m),misc1(m1) {}
+	~lerfu() {
+		if (valsi) delete valsi;
+		if (mod) delete mod;
+		if (misc1) delete misc1;
+	}
+	enum astype type() {return LERFU;}
 };
 
 

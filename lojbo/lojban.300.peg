@@ -69,7 +69,7 @@ sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=ne
 		 / t:ZO s:any_word {$$=new tagged(NULL,s,t);}
 		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
 		 / LOhU any_word+ LEhU 
-		 / ZOI <any_word> <(!($1).)*> $1 
+		 / ZOI <any_word> <(!($1).)*> $1 {$$=new tagged(z,);}
 sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
 		 / relative_clauses sumti_tail_1
 sumti_tail_1	<- quantifier? selbri relative_clauses? / quantifier sumti
@@ -98,14 +98,14 @@ tanru_unit_2	<- BRIVLA
 		 / g:GOhA r:RAhO?
 		 / KE selbri_3 KEhE? 
 		 / ME sumti MEhU? MOI? / (number / lerfu_string) MOI 
-		 / N:NUhA m:mex_operator
+		 / N:NUhA m:mex_operator {$$=new tagged(N,m);}
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);} 
 		 / any_word (ZEI any_word)+
 		 / N:NAhE s:tanru_unit_2 {$$=new tagged(N,s);}
-		 / nu subsentence KEI?
-nu		<- nu joik_jek NU NAI? 
-		 / NU NAI?
+		 / t:nu s:subsentence m1:KEI? {$$=new tagged(t,s,m1);}
+nu		<- S:nu j:joik_jek s:NU t:NAI? {$$=new opconn(j,S,t?new tagged(t,s):s);}
+		 / s:NU t:NAI? {$$=t?new tagged(t,s):s;}
 linkargs	<- BE term links? BEhO?
 links		<- BEI term links?
 quantifier	<- number BOI? / VEI mex VEhO?
@@ -141,9 +141,9 @@ operand_3	<- quantifier / lerfu_string BOI?
 		 / NIhE selbri TEhU? / MOhE sumti TEhU? 
 		 / JOhI mex_2A TEhU? / gek operand m1:GI N:NAI? operand_3 
 		 / (LAhE / NAhE BO) operand LUhU?
-number		<- number (PA / lerfu_word) / PA
-lerfu_string	<- lerfu_string (PA / lerfu_word) / lerfu_word
-?lerfu_word	<- BY / any_word BU / LAU lerfu_word / TEI lerfu_string FOI
+number		<- n:number (p:PA / p:lerfu_word) {$$=n->append(p);} / p:PA {$$=new number(p);}
+lerfu_string	<- n:lerfu_string (p:PA / p:lerfu_word) {$$=n->append(p);} / p:lerfu_word {$$=new lerfustr(p);}
+lerfu_word	<- B:BY {$$=new lerfu(B);} / B:any_word m1:BU {$$=new lerfu(B,NULL,m1);} / m:LAU B:lerfu_word {$$=new lerfu(B,m);} / m:TEI B:lerfu_string m1:FOI {$$=new lerfu(B,m,m1);}
 ek		<- N:NA? S:SE? J:A NI:NAI? {$$=new conn(N,S,NI,J,NULL,NULL);}
 gihek		<- NA? SE? GIhA NAI? {$$=new conn(N,S,NI,J,NULL,NULL);}
 jek		<- N:NA? S:SE? J:JA NI:NAI? {$$=new conn(N,S,NI,J,NULL,NULL);}
