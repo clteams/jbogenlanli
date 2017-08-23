@@ -14,7 +14,7 @@ class ast {
 class indicator:public ast {
 	//
 	public:
-	enum astype type() {return INDICATOR;}
+	astype type() {return INDICATOR;}
 };
 
 class valsi:public ast {
@@ -128,7 +128,7 @@ class tagged:public ast {
 		//
 		return *this;
 	}
-	enum astype type() {return TAGGED;}
+	astype type() {return TAGGED;}
 };
 
 class term:public ast {
@@ -147,7 +147,7 @@ class term:public ast {
 		//
 		return *this;
 	}
-	enum astype type() {return TERM;}
+	astype type() {return TERM;}
 };
 
 class sumti:public ast {
@@ -168,7 +168,7 @@ class sumti:public ast {
 	        //
                 return *this;
 	}
-        enum astype type() {return SUMTI;}
+        astype type() {return SUMTI;}
 };
 
 class description:public ast {
@@ -193,7 +193,7 @@ class operand:public ast { //pseudo class containing the only subtree opconn [wi
 		conn=op.conn;
 		return *this;
 	}
-	enum astype type() {return OPERAND;}
+	astype type() {return OPERAND;}
 
 };
 
@@ -210,7 +210,7 @@ class number:public ast {
 	~number() {
 		for(auto m:ll) delete m;
 	}
-	enum astype type() {return NUMBER;}
+	astype type() {return NUMBER;}
 };
 
 class lerfustr:public ast {
@@ -226,7 +226,7 @@ class lerfustr:public ast {
 	~lerfustr() {
 		for(auto m:ll) delete m;
 	}
-	enum astype type() {return LERFUSTR;}
+	astype type() {return LERFUSTR;}
 };
 
 class lerfu:public ast {
@@ -240,7 +240,7 @@ class lerfu:public ast {
 		if (mod) delete mod;
 		if (misc1) delete misc1;
 	}
-	enum astype type() {return LERFU;}
+	astype type() {return LERFU;}
 };
 
 

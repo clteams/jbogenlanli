@@ -36,7 +36,7 @@ bridi_tail_3	<- selbri tail_terms / gek_sentence
 gek_sentence	<- j:gek S:subsentence m1:GI N:NAI? t:subsentence tt:tail_terms {$$=new opconn(j->modify(N,NULL,m1),S,t);/*append tt to each bridi_tail in each subsentence */}
 		 / t:tag? m1:KE s:gek_sentence m2:KEhE? {$$=new tagged(t,s,m1,m2);}
 		 / t:NA s:gek_sentence {$$=new tagged(t,s);}
-tail_terms	<- terms? VAU?
+tail_terms	<- t:terms? m1:VAU? {$$=m1?new tagged(NULL,t,m1):t;}
 terms		<- S:terms t:terms_1 {$$=new opconn(NULL,S,t);}
 		 / t:terms_1 {$$=t;}
 terms_1		<- S:terms_1 m1:PEhE j:joik_jek t:terms_2 {$$=new opconn(j->modify(NULL,NULL,m1),S,t);}
@@ -69,13 +69,13 @@ sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=ne
 		 / t:ZO s:any_word {$$=new tagged(NULL,s,t);}
 		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
 		 / LOhU any_word+ LEhU 
-		 / ZOI <any_word> <(!($1).)*> $1 {$$=new tagged(z,);}
+		 / ZOI <any_word> <(!($1).)*> $1 {/*$$=new tagged(z,);*/}
 sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
 		 / relative_clauses sumti_tail_1
 sumti_tail_1	<- quantifier? selbri relative_clauses? / quantifier sumti
 relative_clauses<- relative_clauses ZIhE relative_clause
 		 / t:relative_clause {$$=t;}
-relative_clause	<- GOI term GEhU? / NOI subsentence KUhO?
+relative_clause	<- (t:GOI s:term m1:GEhU? / t:NOI s:subsentence m1:KUhO?) {$$=new tagged(t,s,m1);}
 selbri		<- t:tag? s:selbri_1 {$$=t?new tagged(t,s):s;}
 selbri_1	<- s:selbri_2 {$$=s;}
 		 / N:NA s:selbri {$$=new tagged(N,s);}
@@ -94,11 +94,11 @@ selbri_6	<- t:tanru_unit m1:BO S:selbri_6 {$$=new opconn(new conn(NULL,NULL,NULL
 tanru_unit	<- tanru_unit CEI tanru_unit_1
 		 / t:tanru_unit_1 {$$=t;}
 tanru_unit_1	<- tanru_unit_2 linkargs?
-tanru_unit_2	<- BRIVLA 
-		 / g:GOhA r:RAhO?
+tanru_unit_2	<- t:BRIVLA {$$=t;}
+		 / g:GOhA r:RAhO? {$$=r?new tagged(r,g):g;}
 		 / KE selbri_3 KEhE? 
 		 / ME sumti MEhU? MOI? / (number / lerfu_string) MOI 
-		 / N:NUhA m:mex_operator {$$=new tagged(N,m);}
+		 / N:NUhA m:mex_operator {$$=new tagged(NULL,m,N);}
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);} 
 		 / any_word (ZEI any_word)+
@@ -110,7 +110,7 @@ linkargs	<- BE term links? BEhO?
 links		<- BEI term links?
 quantifier	<- number BOI? / VEI mex VEhO?
 mex		<- m:mex_0 {$$=m;}
-		 / FUhA rp_expression
+		 / f:FUhA s:rp_expression {$$=new tagged(NULL,s,f);}
 mex_0		<- S:mex_0 j:operator t:mex_1 {$$=new opconn(j,S,t);}
 		 / t:mex_1 {$$=t;}
 mex_1		<- t:mex_2 m1:BIhE j:operator S:mex_1 {$$=new opconn(j->modify(NULL,NULL,m1),t,S);}
@@ -167,8 +167,7 @@ time		<- ZI & time_offset+ & ZEhA (PU NAI?)? & interval_prop+
 time_offset	<- PU NAI? ZI?
 space		<- VA & space_offset+ & space_interval & (MOhI space_offset)
 space_offset	<- FAhA NAI? VA?
-space_interval	<- ((VEhA & VIhA) (FAhA NAI?)?) & space_int_props
-space_int_props	<- (FEhE interval_prop)+
+space_interval	<- ((VEhA VIhA? /VEhA? VIhA) (FAhA NAI?)?) & (FEhE interval_prop)+
 interval_prop	<- number ROI NAI? / TAhE NAI? / ZAhO NAI?
 free		<- SEI (terms CU?)? selbri SEhU? / SOI sumti sumti? SEhU? 
 		 / vocative relative_clauses? selbri relative_clauses? DOhU? 
