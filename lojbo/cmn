@@ -1,124 +1,124 @@
-A		<- <BAhE?> !ZEI !BU <A_cmavo>!ZEI !BU ind:indicators?
+A		<- <BAhE?> !ZEI !BU <A_cmavo> !ZEI !BU ind:indicators?
 
-BAI		<- <BAhE?> !ZEI !BU <BAI_cmavo>!ZEI !BU ind:indicators?
-BE		<- <BAhE?> !ZEI !BU <BE_cmavo>!ZEI !BU ind:indicators?
-BEhO		<- <BAhE?> !ZEI !BU <BEhO_cmavo>!ZEI !BU ind:indicators?
-BEI		<- <BAhE?> !ZEI !BU <BEI_cmavo>!ZEI !BU ind:indicators?
-BIhE		<- <BAhE?> !ZEI !BU <BIhE_cmavo>!ZEI !BU ind:indicators?
-BIhI		<- <BAhE?> !ZEI !BU <BIhI_cmavo>!ZEI !BU ind:indicators?
-BO		<- <BAhE?> !ZEI !BU <BO_cmavo>!ZEI !BU ind:indicators?
-BOI		<- <BAhE?> !ZEI !BU <BOI_cmavo>!ZEI !BU ind:indicators?
-BRIVLA		<- <BAhE?> !ZEI !BU <BRIVLA_>!ZEI !BU ind:indicators?
-BU		<- <BAhE?> !ZEI !BU <BU_cmavo>!ZEI !BU ind:indicators?
-BY		<- <BAhE?> !ZEI !BU <BY_cmavo>!ZEI !BU ind:indicators?
-CAhA		<- <BAhE?> !ZEI !BU <CAhA_cmavo>!ZEI !BU ind:indicators?
-CAI		<- <BAhE?> !ZEI !BU <CAI_cmavo>!ZEI !BU ind:indicators?
-CEhE		<- <BAhE?> !ZEI !BU <CEhE_cmavo>!ZEI !BU ind:indicators?
-CEI		<- <BAhE?> !ZEI !BU <CEI_cmavo>!ZEI !BU ind:indicators?
-CMENE		<- <BAhE?> !ZEI !BU <CMENE_>!ZEI !BU ind:indicators?
-CO		<- <BAhE?> !ZEI !BU <CO_cmavo>!ZEI !BU ind:indicators?
-COI		<- <BAhE?> !ZEI !BU <COI_cmavo>!ZEI !BU ind:indicators?
-CU		<- <BAhE?> !ZEI !BU <CU_cmavo>!ZEI !BU ind:indicators?
-CUhE		<- <BAhE?> !ZEI !BU <CUhE_cmavo>!ZEI !BU ind:indicators?
-DAhO		<- <BAhE?> !ZEI !BU <DAhO_cmavo>!ZEI !BU ind:indicators?
-DOhU		<- <BAhE?> !ZEI !BU <DOhU_cmavo>!ZEI !BU ind:indicators?
-DOI		<- <BAhE?> !ZEI !BU <DOI_cmavo>!ZEI !BU ind:indicators?
-FA		<- <BAhE?> !ZEI !BU <FA_cmavo>!ZEI !BU ind:indicators?
-FAhA		<- <BAhE?> !ZEI !BU <FAhA_cmavo>!ZEI !BU ind:indicators?
-FAhO		<- <BAhE?> !ZEI !BU <FAhO_cmavo>!ZEI !BU ind:indicators?
-FEhE		<- <BAhE?> !ZEI !BU <FEhE_cmavo>!ZEI !BU ind:indicators?
-FEhU		<- <BAhE?> !ZEI !BU <FEhU_cmavo>!ZEI !BU ind:indicators?
-FIhO		<- <BAhE?> !ZEI !BU <FIhO_cmavo>!ZEI !BU ind:indicators?
-FOI		<- <BAhE?> !ZEI !BU <FOI_cmavo>!ZEI !BU ind:indicators?
-FUhA		<- <BAhE?> !ZEI !BU <FUhA_cmavo>!ZEI !BU ind:indicators?
-FUhE		<- <BAhE?> !ZEI !BU <FUhE_cmavo>!ZEI !BU ind:indicators?
-FUhO		<- <BAhE?> !ZEI !BU <FUhO_cmavo>!ZEI !BU ind:indicators?
-GA		<- <BAhE?> !ZEI !BU <GA_cmavo>!ZEI !BU ind:indicators?
-GAhO		<- <BAhE?> !ZEI !BU <GAhO_cmavo>!ZEI !BU ind:indicators?
-GEhU		<- <BAhE?> !ZEI !BU <GEhU_cmavo>!ZEI !BU ind:indicators?
-GI		<- <BAhE?> !ZEI !BU <GI_cmavo>!ZEI !BU ind:indicators?
-GIhA		<- <BAhE?> !ZEI !BU <GIhA_cmavo>!ZEI !BU ind:indicators?
-GOhA		<- <BAhE?> !ZEI !BU <GOhA_cmavo>!ZEI !BU ind:indicators?
-GOI		<- <BAhE?> !ZEI !BU <GOI_cmavo>!ZEI !BU ind:indicators?
-GUhA		<- <BAhE?> !ZEI !BU <GUhA_cmavo>!ZEI !BU ind:indicators?
-I		<- <BAhE?> !ZEI !BU <I_cmavo>!ZEI !BU ind:indicators?
-JA		<- <BAhE?> !ZEI !BU <JA_cmavo>!ZEI !BU ind:indicators?
-JAI		<- <BAhE?> !ZEI !BU <JAI_cmavo>!ZEI !BU ind:indicators?
-JOhI		<- <BAhE?> !ZEI !BU <JOhI_cmavo>!ZEI !BU ind:indicators?
-JOI		<- <BAhE?> !ZEI !BU <JOI_cmavo>!ZEI !BU ind:indicators?
-KE		<- <BAhE?> !ZEI !BU <KE_cmavo>!ZEI !BU ind:indicators?
-KEhE		<- <BAhE?> !ZEI !BU <KEhE_cmavo>!ZEI !BU ind:indicators?
-KEI		<- <BAhE?> !ZEI !BU <KEI_cmavo>!ZEI !BU ind:indicators?
-KI		<- <BAhE?> !ZEI !BU <KI_cmavo>!ZEI !BU ind:indicators?
-KOhA		<- <BAhE?> !ZEI !BU <KOhA_cmavo>!ZEI !BU ind:indicators?
-KU		<- <BAhE?> !ZEI !BU <KU_cmavo>!ZEI !BU ind:indicators?
-KUhE		<- <BAhE?> !ZEI !BU <KUhE_cmavo>!ZEI !BU ind:indicators?
-KUhO		<- <BAhE?> !ZEI !BU <KUhO_cmavo>!ZEI !BU ind:indicators?
-LA		<- <BAhE?> !ZEI !BU <LA_cmavo>!ZEI !BU ind:indicators?
-LAhE		<- <BAhE?> !ZEI !BU <LAhE_cmavo>!ZEI !BU ind:indicators?
-LAU		<- <BAhE?> !ZEI !BU <LAU_cmavo>!ZEI !BU ind:indicators?
-LE		<- <BAhE?> !ZEI !BU <LE_cmavo>!ZEI !BU ind:indicators?
-LEhU		<- <BAhE?> !ZEI !BU <LEhU_cmavo>!ZEI !BU ind:indicators?
-LI		<- <BAhE?> !ZEI !BU <LI_cmavo>!ZEI !BU ind:indicators?
-LIhU		<- <BAhE?> !ZEI !BU <LIhU_cmavo>!ZEI !BU ind:indicators?
-LOhO		<- <BAhE?> !ZEI !BU <LOhO_cmavo>!ZEI !BU ind:indicators?
-LOhU		<- <BAhE?> !ZEI !BU <LOhU_cmavo>!ZEI !BU ind:indicators?
-LU		<- <BAhE?> !ZEI !BU <LU_cmavo>!ZEI !BU ind:indicators?
-LUhU		<- <BAhE?> !ZEI !BU <LUhU_cmavo>!ZEI !BU ind:indicators?
-MAhO		<- <BAhE?> !ZEI !BU <MAhO_cmavo>!ZEI !BU ind:indicators?
-MAI		<- <BAhE?> !ZEI !BU <MAI_cmavo>!ZEI !BU ind:indicators?
-ME		<- <BAhE?> !ZEI !BU <ME_cmavo>!ZEI !BU ind:indicators?
-MEhU		<- <BAhE?> !ZEI !BU <MEhU_cmavo>!ZEI !BU ind:indicators?
-MOhE		<- <BAhE?> !ZEI !BU <MOhE_cmavo>!ZEI !BU ind:indicators?
-MOhI		<- <BAhE?> !ZEI !BU <MOhI_cmavo>!ZEI !BU ind:indicators?
-MOI		<- <BAhE?> !ZEI !BU <MOI_cmavo>!ZEI !BU ind:indicators?
-NA		<- <BAhE?> !ZEI !BU <NA_cmavo>!ZEI !BU ind:indicators?
-NAhE		<- <BAhE?> !ZEI !BU <NAhE_cmavo>!ZEI !BU ind:indicators?
-NAhU		<- <BAhE?> !ZEI !BU <NAhU_cmavo>!ZEI !BU ind:indicators?
-NAI		<- <BAhE?> !ZEI !BU <NAI_cmavo>!ZEI !BU ind:indicators?
-NIhE		<- <BAhE?> !ZEI !BU <NIhE_cmavo>!ZEI !BU ind:indicators?
-NIhO		<- <BAhE?> !ZEI !BU <NIhO_cmavo>!ZEI !BU ind:indicators?
-NOI		<- <BAhE?> !ZEI !BU <NOI_cmavo>!ZEI !BU ind:indicators?
-NU		<- <BAhE?> !ZEI !BU <NU_cmavo>!ZEI !BU ind:indicators?
-NUhA		<- <BAhE?> !ZEI !BU <NUhA_cmavo>!ZEI !BU ind:indicators?
-NUhI		<- <BAhE?> !ZEI !BU <NUhI_cmavo>!ZEI !BU ind:indicators?
-NUhU		<- <BAhE?> !ZEI !BU <NUhU_cmavo>!ZEI !BU ind:indicators?
-PA		<- <BAhE?> !ZEI !BU <PA_cmavo>!ZEI !BU ind:indicators?
-PEhE		<- <BAhE?> !ZEI !BU <PEhE_cmavo>!ZEI !BU ind:indicators?
-PEhO		<- <BAhE?> !ZEI !BU <PEhO_cmavo>!ZEI !BU ind:indicators?
-PU		<- <BAhE?> !ZEI !BU <PU_cmavo>!ZEI !BU ind:indicators?
-RAhO		<- <BAhE?> !ZEI !BU <RAhO_cmavo>!ZEI !BU ind:indicators?
-ROI		<- <BAhE?> !ZEI !BU <ROI_cmavo>!ZEI !BU ind:indicators?
-SA		<- <BAhE?> !ZEI !BU <SA_cmavo>!ZEI !BU ind:indicators?
-SE		<- <BAhE?> !ZEI !BU <SE_cmavo>!ZEI !BU ind:indicators?
-SI		<- <BAhE?> !ZEI !BU <SI_cmavo>!ZEI !BU ind:indicators?
-SU		<- <BAhE?> !ZEI !BU <SU_cmavo>!ZEI !BU ind:indicators?
-SEhU		<- <BAhE?> !ZEI !BU <SEhU_cmavo>!ZEI !BU ind:indicators?
-SEI		<- <BAhE?> !ZEI !BU <SEI_cmavo>!ZEI !BU ind:indicators?
-SOI		<- <BAhE?> !ZEI !BU <SOI_cmavo>!ZEI !BU ind:indicators?
-TAhE		<- <BAhE?> !ZEI !BU <TAhE_cmavo>!ZEI !BU ind:indicators?
-TEhU		<- <BAhE?> !ZEI !BU <TEhU_cmavo>!ZEI !BU ind:indicators?
-TEI		<- <BAhE?> !ZEI !BU <TEI_cmavo>!ZEI !BU ind:indicators?
-TO		<- <BAhE?> !ZEI !BU <TO_cmavo>!ZEI !BU ind:indicators?
-TOI		<- <BAhE?> !ZEI !BU <TOI_cmavo>!ZEI !BU ind:indicators?
-TUhE		<- <BAhE?> !ZEI !BU <TUhE_cmavo>!ZEI !BU ind:indicators?
-TUhU		<- <BAhE?> !ZEI !BU <TUhU_cmavo>!ZEI !BU ind:indicators?
-UI		<- <BAhE?> !ZEI !BU <UI_cmavo>!ZEI !BU ind:indicators?
-VA		<- <BAhE?> !ZEI !BU <VA_cmavo>!ZEI !BU ind:indicators?
-VAU		<- <BAhE?> !ZEI !BU <VAU_cmavo>!ZEI !BU ind:indicators?
-VEhA		<- <BAhE?> !ZEI !BU <VEhA_cmavo>!ZEI !BU ind:indicators?
-VEhO		<- <BAhE?> !ZEI !BU <VEhO_cmavo>!ZEI !BU ind:indicators?
-VEI		<- <BAhE?> !ZEI !BU <VEI_cmavo>!ZEI !BU ind:indicators?
-VIhA		<- <BAhE?> !ZEI !BU <VIhA_cmavo>!ZEI !BU ind:indicators?
-VUhO		<- <BAhE?> !ZEI !BU <VUhO_cmavo>!ZEI !BU ind:indicators?
-VUhU		<- <BAhE?> !ZEI !BU <VUhU_cmavo>!ZEI !BU ind:indicators?
-XI		<- <BAhE?> !ZEI !BU <XI_cmavo>!ZEI !BU ind:indicators?
-Y		<- <BAhE?> !ZEI !BU <Y_cmavo>!ZEI !BU ind:indicators?
-ZAhO		<- <BAhE?> !ZEI !BU <ZAhO_cmavo>!ZEI !BU ind:indicators?
-ZEhA		<- <BAhE?> !ZEI !BU <ZEhA_cmavo>!ZEI !BU ind:indicators?
-ZEI		<- <BAhE?> !ZEI !BU <ZEI_cmavo>!ZEI !BU ind:indicators?
-ZI		<- <BAhE?> !ZEI !BU <ZI_cmavo>!ZEI !BU ind:indicators?
-ZIhE		<- <BAhE?> !ZEI !BU <ZIhE_cmavo>!ZEI !BU ind:indicators?
-ZO		<- <BAhE?> !ZEI !BU <ZO_cmavo>!ZEI !BU ind:indicators?
-ZOhU		<- <BAhE?> !ZEI !BU <ZOhU_cmavo>!ZEI !BU ind:indicators?
-ZOI		<- <BAhE?> !ZEI !BU <ZOI_cmavo>!ZEI !BU ind:indicators?
+BAI		<- <BAhE?> !ZEI !BU <BAI_cmavo> !ZEI !BU ind:indicators?
+BE		<- <BAhE?> !ZEI !BU <BE_cmavo> !ZEI !BU ind:indicators?
+BEhO		<- <BAhE?> !ZEI !BU <BEhO_cmavo> !ZEI !BU ind:indicators?
+BEI		<- <BAhE?> !ZEI !BU <BEI_cmavo> !ZEI !BU ind:indicators?
+BIhE		<- <BAhE?> !ZEI !BU <BIhE_cmavo> !ZEI !BU ind:indicators?
+BIhI		<- <BAhE?> !ZEI !BU <BIhI_cmavo> !ZEI !BU ind:indicators?
+BO		<- <BAhE?> !ZEI !BU <BO_cmavo> !ZEI !BU ind:indicators?
+BOI		<- <BAhE?> !ZEI !BU <BOI_cmavo> !ZEI !BU ind:indicators?
+BRIVLA		<- <BAhE?> !ZEI !BU <BRIVLA_> !ZEI !BU ind:indicators?
+BU		<- <BAhE?> !ZEI !BU <BU_cmavo> !ZEI !BU ind:indicators?
+BY		<- <BAhE?> !ZEI !BU <BY_cmavo> !ZEI !BU ind:indicators?
+CAhA		<- <BAhE?> !ZEI !BU <CAhA_cmavo> !ZEI !BU ind:indicators?
+CAI		<- <BAhE?> !ZEI !BU <CAI_cmavo> !ZEI !BU ind:indicators?
+CEhE		<- <BAhE?> !ZEI !BU <CEhE_cmavo> !ZEI !BU ind:indicators?
+CEI		<- <BAhE?> !ZEI !BU <CEI_cmavo> !ZEI !BU ind:indicators?
+CMENE		<- <BAhE?> !ZEI !BU <CMENE_> !ZEI !BU ind:indicators?
+CO		<- <BAhE?> !ZEI !BU <CO_cmavo> !ZEI !BU ind:indicators?
+COI		<- <BAhE?> !ZEI !BU <COI_cmavo> !ZEI !BU ind:indicators?
+CU		<- <BAhE?> !ZEI !BU <CU_cmavo> !ZEI !BU ind:indicators?
+CUhE		<- <BAhE?> !ZEI !BU <CUhE_cmavo> !ZEI !BU ind:indicators?
+DAhO		<- <BAhE?> !ZEI !BU <DAhO_cmavo> !ZEI !BU ind:indicators?
+DOhU		<- <BAhE?> !ZEI !BU <DOhU_cmavo> !ZEI !BU ind:indicators?
+DOI		<- <BAhE?> !ZEI !BU <DOI_cmavo> !ZEI !BU ind:indicators?
+FA		<- <BAhE?> !ZEI !BU <FA_cmavo> !ZEI !BU ind:indicators?
+FAhA		<- <BAhE?> !ZEI !BU <FAhA_cmavo> !ZEI !BU ind:indicators?
+FAhO		<- <BAhE?> !ZEI !BU <FAhO_cmavo> !ZEI !BU ind:indicators?
+FEhE		<- <BAhE?> !ZEI !BU <FEhE_cmavo> !ZEI !BU ind:indicators?
+FEhU		<- <BAhE?> !ZEI !BU <FEhU_cmavo> !ZEI !BU ind:indicators?
+FIhO		<- <BAhE?> !ZEI !BU <FIhO_cmavo> !ZEI !BU ind:indicators?
+FOI		<- <BAhE?> !ZEI !BU <FOI_cmavo> !ZEI !BU ind:indicators?
+FUhA		<- <BAhE?> !ZEI !BU <FUhA_cmavo> !ZEI !BU ind:indicators?
+FUhE		<- <BAhE?> !ZEI !BU <FUhE_cmavo> !ZEI !BU ind:indicators?
+FUhO		<- <BAhE?> !ZEI !BU <FUhO_cmavo> !ZEI !BU ind:indicators?
+GA		<- <BAhE?> !ZEI !BU <GA_cmavo> !ZEI !BU ind:indicators?
+GAhO		<- <BAhE?> !ZEI !BU <GAhO_cmavo> !ZEI !BU ind:indicators?
+GEhU		<- <BAhE?> !ZEI !BU <GEhU_cmavo> !ZEI !BU ind:indicators?
+GI		<- <BAhE?> !ZEI !BU <GI_cmavo> !ZEI !BU ind:indicators?
+GIhA		<- <BAhE?> !ZEI !BU <GIhA_cmavo> !ZEI !BU ind:indicators?
+GOhA		<- <BAhE?> !ZEI !BU <GOhA_cmavo> !ZEI !BU ind:indicators?
+GOI		<- <BAhE?> !ZEI !BU <GOI_cmavo> !ZEI !BU ind:indicators?
+GUhA		<- <BAhE?> !ZEI !BU <GUhA_cmavo> !ZEI !BU ind:indicators?
+I		<- <BAhE?> !ZEI !BU <I_cmavo> !ZEI !BU ind:indicators?
+JA		<- <BAhE?> !ZEI !BU <JA_cmavo> !ZEI !BU ind:indicators?
+JAI		<- <BAhE?> !ZEI !BU <JAI_cmavo> !ZEI !BU ind:indicators?
+JOhI		<- <BAhE?> !ZEI !BU <JOhI_cmavo> !ZEI !BU ind:indicators?
+JOI		<- <BAhE?> !ZEI !BU <JOI_cmavo> !ZEI !BU ind:indicators?
+KE		<- <BAhE?> !ZEI !BU <KE_cmavo> !ZEI !BU ind:indicators?
+KEhE		<- <BAhE?> !ZEI !BU <KEhE_cmavo> !ZEI !BU ind:indicators?
+KEI		<- <BAhE?> !ZEI !BU <KEI_cmavo> !ZEI !BU ind:indicators?
+KI		<- <BAhE?> !ZEI !BU <KI_cmavo> !ZEI !BU ind:indicators?
+KOhA		<- <BAhE?> !ZEI !BU <KOhA_cmavo> !ZEI !BU ind:indicators?
+KU		<- <BAhE?> !ZEI !BU <KU_cmavo> !ZEI !BU ind:indicators?
+KUhE		<- <BAhE?> !ZEI !BU <KUhE_cmavo> !ZEI !BU ind:indicators?
+KUhO		<- <BAhE?> !ZEI !BU <KUhO_cmavo> !ZEI !BU ind:indicators?
+LA		<- <BAhE?> !ZEI !BU <LA_cmavo> !ZEI !BU ind:indicators?
+LAhE		<- <BAhE?> !ZEI !BU <LAhE_cmavo> !ZEI !BU ind:indicators?
+LAU		<- <BAhE?> !ZEI !BU <LAU_cmavo> !ZEI !BU ind:indicators?
+LE		<- <BAhE?> !ZEI !BU <LE_cmavo> !ZEI !BU ind:indicators?
+LEhU		<- <BAhE?> !ZEI !BU <LEhU_cmavo> !ZEI !BU ind:indicators?
+LI		<- <BAhE?> !ZEI !BU <LI_cmavo> !ZEI !BU ind:indicators?
+LIhU		<- <BAhE?> !ZEI !BU <LIhU_cmavo> !ZEI !BU ind:indicators?
+LOhO		<- <BAhE?> !ZEI !BU <LOhO_cmavo> !ZEI !BU ind:indicators?
+LOhU		<- <BAhE?> !ZEI !BU <LOhU_cmavo> !ZEI !BU ind:indicators?
+LU		<- <BAhE?> !ZEI !BU <LU_cmavo> !ZEI !BU ind:indicators?
+LUhU		<- <BAhE?> !ZEI !BU <LUhU_cmavo> !ZEI !BU ind:indicators?
+MAhO		<- <BAhE?> !ZEI !BU <MAhO_cmavo> !ZEI !BU ind:indicators?
+MAI		<- <BAhE?> !ZEI !BU <MAI_cmavo> !ZEI !BU ind:indicators?
+ME		<- <BAhE?> !ZEI !BU <ME_cmavo> !ZEI !BU ind:indicators?
+MEhU		<- <BAhE?> !ZEI !BU <MEhU_cmavo> !ZEI !BU ind:indicators?
+MOhE		<- <BAhE?> !ZEI !BU <MOhE_cmavo> !ZEI !BU ind:indicators?
+MOhI		<- <BAhE?> !ZEI !BU <MOhI_cmavo> !ZEI !BU ind:indicators?
+MOI		<- <BAhE?> !ZEI !BU <MOI_cmavo> !ZEI !BU ind:indicators?
+NA		<- <BAhE?> !ZEI !BU <NA_cmavo> !ZEI !BU ind:indicators?
+NAhE		<- <BAhE?> !ZEI !BU <NAhE_cmavo> !ZEI !BU ind:indicators?
+NAhU		<- <BAhE?> !ZEI !BU <NAhU_cmavo> !ZEI !BU ind:indicators?
+NAI		<- <BAhE?> !ZEI !BU <NAI_cmavo> !ZEI !BU ind:indicators?
+NIhE		<- <BAhE?> !ZEI !BU <NIhE_cmavo> !ZEI !BU ind:indicators?
+NIhO		<- <BAhE?> !ZEI !BU <NIhO_cmavo> !ZEI !BU ind:indicators?
+NOI		<- <BAhE?> !ZEI !BU <NOI_cmavo> !ZEI !BU ind:indicators?
+NU		<- <BAhE?> !ZEI !BU <NU_cmavo> !ZEI !BU ind:indicators?
+NUhA		<- <BAhE?> !ZEI !BU <NUhA_cmavo> !ZEI !BU ind:indicators?
+NUhI		<- <BAhE?> !ZEI !BU <NUhI_cmavo> !ZEI !BU ind:indicators?
+NUhU		<- <BAhE?> !ZEI !BU <NUhU_cmavo> !ZEI !BU ind:indicators?
+PA		<- <BAhE?> !ZEI !BU <PA_cmavo> !ZEI !BU ind:indicators?
+PEhE		<- <BAhE?> !ZEI !BU <PEhE_cmavo> !ZEI !BU ind:indicators?
+PEhO		<- <BAhE?> !ZEI !BU <PEhO_cmavo> !ZEI !BU ind:indicators?
+PU		<- <BAhE?> !ZEI !BU <PU_cmavo> !ZEI !BU ind:indicators?
+RAhO		<- <BAhE?> !ZEI !BU <RAhO_cmavo> !ZEI !BU ind:indicators?
+ROI		<- <BAhE?> !ZEI !BU <ROI_cmavo> !ZEI !BU ind:indicators?
+SA		<- <BAhE?> !ZEI !BU <SA_cmavo> !ZEI !BU ind:indicators?
+SE		<- <BAhE?> !ZEI !BU <SE_cmavo> !ZEI !BU ind:indicators?
+SI		<- <BAhE?> !ZEI !BU <SI_cmavo> !ZEI !BU ind:indicators?
+SU		<- <BAhE?> !ZEI !BU <SU_cmavo> !ZEI !BU ind:indicators?
+SEhU		<- <BAhE?> !ZEI !BU <SEhU_cmavo> !ZEI !BU ind:indicators?
+SEI		<- <BAhE?> !ZEI !BU <SEI_cmavo> !ZEI !BU ind:indicators?
+SOI		<- <BAhE?> !ZEI !BU <SOI_cmavo> !ZEI !BU ind:indicators?
+TAhE		<- <BAhE?> !ZEI !BU <TAhE_cmavo> !ZEI !BU ind:indicators?
+TEhU		<- <BAhE?> !ZEI !BU <TEhU_cmavo> !ZEI !BU ind:indicators?
+TEI		<- <BAhE?> !ZEI !BU <TEI_cmavo> !ZEI !BU ind:indicators?
+TO		<- <BAhE?> !ZEI !BU <TO_cmavo> !ZEI !BU ind:indicators?
+TOI		<- <BAhE?> !ZEI !BU <TOI_cmavo> !ZEI !BU ind:indicators?
+TUhE		<- <BAhE?> !ZEI !BU <TUhE_cmavo> !ZEI !BU ind:indicators?
+TUhU		<- <BAhE?> !ZEI !BU <TUhU_cmavo> !ZEI !BU ind:indicators?
+UI		<- <BAhE?> !ZEI !BU <UI_cmavo> !ZEI !BU ind:indicators?
+VA		<- <BAhE?> !ZEI !BU <VA_cmavo> !ZEI !BU ind:indicators?
+VAU		<- <BAhE?> !ZEI !BU <VAU_cmavo> !ZEI !BU ind:indicators?
+VEhA		<- <BAhE?> !ZEI !BU <VEhA_cmavo> !ZEI !BU ind:indicators?
+VEhO		<- <BAhE?> !ZEI !BU <VEhO_cmavo> !ZEI !BU ind:indicators?
+VEI		<- <BAhE?> !ZEI !BU <VEI_cmavo> !ZEI !BU ind:indicators?
+VIhA		<- <BAhE?> !ZEI !BU <VIhA_cmavo> !ZEI !BU ind:indicators?
+VUhO		<- <BAhE?> !ZEI !BU <VUhO_cmavo> !ZEI !BU ind:indicators?
+VUhU		<- <BAhE?> !ZEI !BU <VUhU_cmavo> !ZEI !BU ind:indicators?
+XI		<- <BAhE?> !ZEI !BU <XI_cmavo> !ZEI !BU ind:indicators?
+Y		<- <BAhE?> !ZEI !BU <Y_cmavo> !ZEI !BU ind:indicators?
+ZAhO		<- <BAhE?> !ZEI !BU <ZAhO_cmavo> !ZEI !BU ind:indicators?
+ZEhA		<- <BAhE?> !ZEI !BU <ZEhA_cmavo> !ZEI !BU ind:indicators?
+ZEI		<- <BAhE?> !ZEI !BU <ZEI_cmavo> !ZEI !BU ind:indicators?
+ZI		<- <BAhE?> !ZEI !BU <ZI_cmavo> !ZEI !BU ind:indicators?
+ZIhE		<- <BAhE?> !ZEI !BU <ZIhE_cmavo> !ZEI !BU ind:indicators?
+ZO		<- <BAhE?> !ZEI !BU <ZO_cmavo> !ZEI !BU
+ZOhU		<- <BAhE?> !ZEI !BU <ZOhU_cmavo> !ZEI !BU ind:indicators?
+ZOI		<- <BAhE?> !ZEI !BU <ZOI_cmavo> !ZEI !BU ind:indicators?
