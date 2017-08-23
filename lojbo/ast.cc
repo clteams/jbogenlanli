@@ -173,10 +173,22 @@ class sumti:public ast {
 
 class description:public ast {
 	ast *descriptor;
-	ast *misc; //for optional KU 
+	ast *misc1; //for optional KU 
 	ast *iquant; //inner quantifier and relative clause;
 	ast *irelcl;
 	ast *arg; //either sumti or selbri
+	public:
+	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(_m1) {}
+	~description() {
+
+	}
+	ast *modify(ast *_d,ast *_m) {
+		//
+	}
+	ast *appendrc(ast *c) {
+		//	
+	}
+	astype type() {return DESCRIPTION;}
 };
 
 class operand:public ast { //pseudo class containing the only subtree opconn [with operands]. That is because both mex and operands might be of class opconn, so it is wrong to consider them as tree and subtree

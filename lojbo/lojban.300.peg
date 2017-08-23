@@ -64,15 +64,16 @@ sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=ne
 		 / t:KOhA {$$=t;}
 		 / lerfu_string BOI?
 		 / LA relative_clauses? CMENE+
-		 / (LA / LE) sumti_tail KU?
+		 / (d:LA / d:LE) s:sumti_tail m1:KU? {$$=s->modify(d,m1);}
 		 / LI mex LOhO? {//where to place "LI" and "LOhO"? In mex->conn->misc1 or maybe create additional subtree in conn?}
 		 / t:ZO s:any_word {$$=new tagged(NULL,s,t);}
 		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
 		 / LOhU any_word+ LEhU 
 		 / ZOI <any_word> <(!($1).)*> $1 {/*$$=new tagged(z,);*/}
-sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
-		 / relative_clauses sumti_tail_1
-sumti_tail_1	<- quantifier? selbri relative_clauses? / quantifier sumti
+sumti_tail	<- (s6:sumti_6 c:relative_clauses?)? s:sumti_tail_1 {$$=s6?s->appendrc(new tagged(new valsi(NULL,"pe"),new sumti(s6,NULL,c))):s;} 
+		 / c:relative_clauses s:sumti_tail_1 {$$=s->appendrc(s,c);}
+sumti_tail_1	<- q:quantifier? s:selbri c:relative_clauses? {$$=new description(NULL,s,q,c);}
+		 / q:quantifier s:sumti {$$=new description(NULL,s,q);}
 relative_clauses<- relative_clauses ZIhE relative_clause
 		 / t:relative_clause {$$=t;}
 relative_clause	<- (t:GOI s:term m1:GEhU? / t:NOI s:subsentence m1:KUhO?) {$$=new tagged(t,s,m1);}
@@ -163,10 +164,8 @@ stag		<- S:stag (j:jek / j:joik) t:stense_modal {$$=new opconn(j,S,t);}
 tense_modal	<- stense_modal / FIhO selbri FEhU?
 stense_modal	<- NAhE? SE? BAI NAI? KI? 
 		 / NAhE? ((time space? / space time?) CAhA / (time space? / space time?) / CAhA) KI? / KI / CUhE
-time		<- ZI & time_offset+ & ZEhA (PU NAI?)? & interval_prop+
-time_offset	<- PU NAI? ZI?
-space		<- VA & space_offset+ & space_interval & (MOhI space_offset)
-space_offset	<- FAhA NAI? VA?
+time		<- ZI & (PU NAI? ZI?)+ & ZEhA (PU NAI?)? & interval_prop+
+space		<- VA & (FAhA NAI? VA?)+ & space_interval & (MOhI space_offset)
 space_interval	<- ((VEhA VIhA? /VEhA? VIhA) (FAhA NAI?)?) & (FEhE interval_prop)+
 interval_prop	<- number ROI NAI? / TAhE NAI? / ZAhO NAI?
 free		<- SEI (terms CU?)? selbri SEhU? / SOI sumti sumti? SEhU? 
