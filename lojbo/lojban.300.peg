@@ -62,19 +62,19 @@ sumti_5		<- q:quantifier? s:sumti_6 c:relative_clauses? {$$=new sumti(s,q,c);}
 		 / q:quantifier s:selbri m1:KU? c:relative_clauses? {$$=new sumti(new description(new valsi(NULL,"lo"/*,NULL*/),selbri,NULL,NULL,m1),q,c);}
 sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree*/,m1,m2);}
 		 / t:KOhA {$$=t;}
-		 / lerfu_string BOI?
+		 / l:lerfu_string B:BOI? {$$=l->append(NULL,B);}
 		 / LA relative_clauses? CMENE+
 		 / (d:LA / d:LE) s:sumti_tail m1:KU? {$$=s->modify(d,m1);}
-		 / LI mex LOhO? {//where to place "LI" and "LOhO"? In mex->conn->misc1 or maybe create additional subtree in conn?}
+		 / L:LI m:mex m1:LOhO? {$$=new tagged(L,m,m1);}
 		 / t:ZO s:any_word {$$=new tagged(NULL,s,t);}
-		 / t:LU s:text m1:LIhU? {$$=new tagged(t,s,m1);}
+		 / t:LU s:text m1:LIhU? {$$=new tagged(NULL,s,t,m1);}
 		 / LOhU any_word+ LEhU 
 		 / ZOI <any_word> <(!($1).)*> $1 {/*$$=new tagged(z,);*/}
 sumti_tail	<- (s6:sumti_6 c:relative_clauses?)? s:sumti_tail_1 {$$=s6?s->appendrc(new tagged(new valsi(NULL,"pe"),new sumti(s6,NULL,c))):s;} 
 		 / c:relative_clauses s:sumti_tail_1 {$$=s->appendrc(s,c);}
 sumti_tail_1	<- q:quantifier? s:selbri c:relative_clauses? {$$=new description(NULL,s,q,c);}
 		 / q:quantifier s:sumti {$$=new description(NULL,s,q);}
-relative_clauses<- relative_clauses ZIhE relative_clause
+relative_clauses<- S:relative_clauses m1:ZIhE t:relative_clause {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
 		 / t:relative_clause {$$=t;}
 relative_clause	<- (t:GOI s:term m1:GEhU? / t:NOI s:subsentence m1:KUhO?) {$$=new tagged(t,s,m1);}
 selbri		<- t:tag? s:selbri_1 {$$=t?new tagged(t,s):s;}
@@ -162,7 +162,7 @@ tag		<- S:tag j:joik_jek t:tense_modal {$$=new opconn(j,S,t);}
 stag		<- S:stag (j:jek / j:joik) t:stense_modal {$$=new opconn(j,S,t);}
 		 / t:stense_modal {$$=t;}
 tense_modal	<- t:stense_modal {$$=t;} / m1:FIhO s:selbri m2:FEhU? {/*$$=new tagged(m1,s,m2);*/}
-stense_modal	<- N:NAhE? s:SE? b:BAI n:NAI? k:KI? {/*ast *m=new modal(s,b,n,k);$$=N?new taggged(N,m):m;*/}
+stense_modal	<- N:NAhE? s:SE? b:BAI n:NAI? k:KI? {ast *m=new modal(s,b,n,k); $$=N?new taggged(N,m):m;}
 		 / NAhE? ((time space? / space time?) CAhA / (time space? / space time?) / CAhA) KI? / KI / CUhE
 time		<- ZI & time_offset & ZEhA (PU NAI?)? & intprops
 time_offset	<- PU NAI? ZI? time_offset / PU NAI? ZI?

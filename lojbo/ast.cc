@@ -90,6 +90,8 @@ class conn:public ast {
 		if (tag) delete tag;
 		if (misc1) delete misc1;
 		if (misc2) delete misc2;
+		if (misc3) delete misc3;
+		if (misc4) delete misc4;
 	}
 	conn(const ast& op) {
 		//
@@ -215,7 +217,7 @@ class number:public ast {
 	public:
 	number(ast *p,ast *m1=NULL):misc1(m1) {ll.push_back(p);}
 	ast *append(ast *l,ast *m1=NULL) {
-		ll.push_back(l);
+		if (l) ll.push_back(l);
 		if (!misc1) misc1=m1;
 		return this;
 	}
@@ -230,8 +232,8 @@ class lerfustr:public ast {
 	ast *misc1;
 	public:
 	lerfustr(ast *p,ast *m1=NULL):misc1(m1) {ll.push_back(p);}
-	ast *append(ast *l) {
-		ll.push_back(l);
+	ast *append(ast *l,ast *m1=NULL) {
+		if (l) ll.push_back(l);
 		if (!misc1) misc1=m1;
 		return this;
 	}
@@ -261,6 +263,15 @@ class modal:public ast {
 	ast *bai;
 	ast *nai;
 	ast *ki;
+	public:
+	modal(ast *_s,ast *_b,ast *_n,ast *_k):se(_s),bai(_b),nai(_n),ki(_k) {}
+	~modal() {
+		if (se) delete se;
+		if (bai) delete bai;
+		if (nai) delete nai;
+		if (ki) delete ki;
+	}
+	astype type() {return MODAL;}
 };
 class tense:public ast {
 	ast *time;
@@ -286,7 +297,7 @@ class interval:public ast {
 	ast *nai;
 	ast *number;
 	ast *property;
-	ast *pnai;
+	ast *prop_nai;
 };
 
 */
@@ -299,7 +310,7 @@ astype subteetype(ast *st) {
 		case TAGGED: return subtreetype(st->subtree);
 		case CONN:
 			astype l=subtreetype(st->left),r=subtreetype(st->right);
-			//if(l!=r);
+			if(l!=r);
 			return l;
 		default: return t;
 	}
