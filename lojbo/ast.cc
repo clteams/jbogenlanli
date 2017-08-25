@@ -255,6 +255,42 @@ class lerfu:public ast {
 	astype type() {return LERFU;}
 };
 
+/*
+class modal:public ast {
+	ast *se;
+	ast *bai;
+	ast *nai;
+	ast *ki;
+};
+class tense:public ast {
+	ast *time;
+	ast *space;
+	ast *aspect;
+	ast *ki; //CUhE
+};
+class tst:public ast {
+	ast *distance; //valsi
+	ast *offset;//RA opconn //Right-associative because next modifies previous
+	ast *interval;//
+	ast *move_offest;//only for space tense,NULL if time tense
+};
+class offset:public ast {
+	ast *pu;//FAhA
+	ast *nai;
+	ast *zi;//VA
+};
+class interval:public ast {
+	ast *zeha;//VEhA
+	ast *viha;//NULL if time interval
+	ast *pu;//FAhA
+	ast *nai;
+	ast *number;
+	ast *property;
+	ast *pnai;
+};
+
+*/
+
 
 
 astype subteetype(ast *st) {

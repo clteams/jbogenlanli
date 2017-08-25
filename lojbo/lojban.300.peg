@@ -161,13 +161,17 @@ tag		<- S:tag j:joik_jek t:tense_modal {$$=new opconn(j,S,t);}
 		 / t:tense_modal {$$=t;}
 stag		<- S:stag (j:jek / j:joik) t:stense_modal {$$=new opconn(j,S,t);}
 		 / t:stense_modal {$$=t;}
-tense_modal	<- stense_modal / FIhO selbri FEhU?
-stense_modal	<- NAhE? SE? BAI NAI? KI? 
+tense_modal	<- t:stense_modal {$$=t;} / m1:FIhO s:selbri m2:FEhU? {/*$$=new tagged(m1,s,m2);*/}
+stense_modal	<- N:NAhE? s:SE? b:BAI n:NAI? k:KI? {/*ast *m=new modal(s,b,n,k);$$=N?new taggged(N,m):m;*/}
 		 / NAhE? ((time space? / space time?) CAhA / (time space? / space time?) / CAhA) KI? / KI / CUhE
-time		<- ZI & (PU NAI? ZI?)+ & ZEhA (PU NAI?)? & interval_prop+
-space		<- VA & (FAhA NAI? VA?)+ & space_interval & (MOhI space_offset)
-space_interval	<- ((VEhA VIhA? /VEhA? VIhA) (FAhA NAI?)?) & (FEhE interval_prop)+
-interval_prop	<- number ROI NAI? / TAhE NAI? / ZAhO NAI?
+time		<- ZI & time_offset & ZEhA (PU NAI?)? & intprops
+time_offset	<- PU NAI? ZI? time_offset / PU NAI? ZI?
+intprops	<- interval_prop intprops / interval_prop
+space		<- VA & (FAhA NAI? VA?)+ & space_interval & (MOhI FAhA NAI? VA?)
+space_offset	<- FAhA NAI? VA? space_offset / FAhA NAI? VA?
+space_interval	<- ((VEhA VIhA? /VEhA? VIhA) (FAhA NAI?)?) & sintprops
+sintprops	<- (FEhE interval_prop) sintprops / (FEhE interval_prop)
+interval_prop	<- (num:number p:ROI n:NAI? / p:TAhE n:NAI? / p:ZAhO n:NAI?) {/*$$=new intprop(p,n,num);*/}
 free		<- SEI (terms CU?)? selbri SEhU? / SOI sumti sumti? SEhU? 
 		 / vocative relative_clauses? selbri relative_clauses? DOhU? 
 		 / vocative relative_clauses? CMENE+ relative_clauses? DOhU? 

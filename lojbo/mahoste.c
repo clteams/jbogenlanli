@@ -127,6 +127,7 @@ const struct cmm mahoste[CMAVOCNT]={
 {"zy.",ZY},
 {".ybu",YBU},
 {".y'y.",YhY},
+
 {"ca'a",CAhA},
 {"ka'e",KAhE},
 {"nu'o",NUhO},
