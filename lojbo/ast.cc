@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include "mahoste.h"
 
-enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -48,11 +48,9 @@ class opconn:public ast {
 	public:
 	opconn(ast *c,ast *l,ast *r):conn(c),left(l),right(r) {}
 	~opconn() {
-		//
 		delete left;
 		delete right;
 		delete conn;
-		//delete conn;
 	}
 	opconn(const ast& op) {
 		//
@@ -193,6 +191,25 @@ class description:public ast {
 	astype type() {return DESCRIPTION;}
 };
 
+class tanru:public ast {
+	ast *tanru_unit2;
+	ast *linkargs;
+	public:
+	tanru(ast *_t,ast *_l):tanru_unit2(_t),linkargs(_l) {}
+	~opconn() {
+		delete tanru_unit2;
+		if (linkargs) delete linkargs;
+	}
+	opconn(const ast& op) {
+		//
+	}
+	const opconn& operator=(const opconn& op) {
+		//
+		return *this;
+	}
+	astype type() {return TANRU;}
+};
+
 class operand:public ast { //pseudo class containing the only subtree opconn [with operands]. That is because both mex and operands might be of class opconn, so it is wrong to consider them as tree and subtree
 	ast *opconn;
 	public:
@@ -295,9 +312,25 @@ class interval:public ast {
 	ast *viha;//NULL if time interval
 	ast *pu;//FAhA
 	ast *nai;
+	ast *intprops;
+};
+class intprop:public ast {
+	ast *mod; //contains FEhE valsi or null
 	ast *number;
 	ast *property;
-	ast *prop_nai;
+	ast *nai;
+	public:
+	intprop(ast *_p,ast *_n,ast *_num):p(_p),n(_n),num(_num) {}
+	~intprop() {
+		if (mod) delete mod;
+		if (number) delete number;
+		delete property;
+		if (nai) delete nai;
+	}
+	ast *modify(ast *_m) {
+		if (!mod) mod=_m;
+		return this;
+	}
 };
 
 */
