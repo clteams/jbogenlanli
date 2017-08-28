@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include "mahoste.h"
 
-enum astype {VALSI,OPCONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -239,7 +239,7 @@ class number:public ast {
 		return this;
 	}
 	~number() {
-		for(auto m:ll) delete m;
+		for(auto m : ll) delete m;
 	}
 	astype type() {return NUMBER;}
 };
@@ -337,12 +337,13 @@ class intprop:public ast {
 
 
 
-astype subteetype(ast *st) {
+astype subtreetype(ast *st) {
 	astype t;
 	switch(t=st->type()) {
 		case TAGGED: return subtreetype(st->subtree);
 		case CONN:
-			astype l=subtreetype(st->left),r=subtreetype(st->right);
+			astype l=subtreetype(st->left);
+			astype r=subtreetype(st->right);
 			if(l!=r);
 			return l;
 		default: return t;
