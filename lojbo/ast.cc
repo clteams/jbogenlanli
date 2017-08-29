@@ -64,13 +64,13 @@ class opconn:public ast {
 
 class conn:public ast {
 	ast *na; //contains GAhO if joik is BIhI
-	ast *misc1=NULL,*misc2=NULL,misc3=NULL,misc4=NULL; //contains gi if conn is forethought,also CO,BO,ZIhE,etc. 
+	ast *misc1,*misc2,*misc3,*misc4; //contains gi if conn is forethought,also CO,BO,ZIhE,etc. 
 	ast *se,*nai,*jekjoik;
 	ast *tag;
 	public:
-	conn(ast *_na,ast *_se,ast *_nai,ast *_jekjoik,ast *_tag,ast *m1=NULL,ast *m2=NULL,ast *m3=NULL,ast *m4=NULL)
+	conn(ast *_na,ast *_se,ast *_nai,ast *_jekjoik,ast *_tag,ast *m1=nullptr,ast *m2=nullptr,ast *m3=nullptr,ast *m4=nullptr)
 		:na(_na),se(_se),nai(_nai),jekjoik(_jekjoik),tag(_tag),misc1(m1),misc2(m2),misc3(m3),misc4(m4) {}
-	conn *modify(ast *_nai=NULL,ast *_tag=NULL,ast *m1=NULL,ast *m2=NULL,ast *m3=NULL,ast *m4=NULL) {
+	conn *modify(ast *_nai=nullptr,ast *_tag=nullptr,ast *m1=nullptr,ast *m2=nullptr,ast *m3=nullptr,ast *m4=nullptr) {
 			if (_nai) nai=_nai;
 			if (_tag) tag=_tag;
 			if (m1) misc1=m1;
@@ -107,8 +107,8 @@ class tagged:public ast {
 	ast *subtree;
 	ast *misc1,*misc2;
 	public:
-	tagged(ast *_tag,ast *_st,ast *_m1=NULL,ast *_m2=NULL):tag(_tag),subtree(_st),misc1(_m1),misc2(_m2) {}
-	tagged *modify(ast *_t=NULL,ast *_s=NULL,ast *m1=NULL,ast *m2=NULL) {
+	tagged(ast *_tag,ast *_st,ast *_m1=nullptr,ast *_m2=nullptr):tag(_tag),subtree(_st),misc1(_m1),misc2(_m2) {}
+	tagged *modify(ast *_t=nullptr,ast *_s=nullptr,ast *m1=nullptr,ast *m2=nullptr) {
 			if (_t) tag=_t;
 			if (_s) subtree=_s;
 			if (m1) misc1=m1;
@@ -132,7 +132,7 @@ class tagged:public ast {
 };
 
 class term:public ast {
-	ast *tag;/*(tag/FA/NA). NULL if none)*/
+	ast *tag;/*(tag/FA/NA). nullptr if none)*/
 	ast *sumti; /*or termset or KU*/
 	public:
 	term(ast *_t,ast *_s):tag(_t),sumti(_s) {}
@@ -220,7 +220,7 @@ class operand:public ast { //pseudo class containing the only subtree opconn [wi
 	public:
 	operand(ast *_c):conn(_c) {}
 	~operand() {
-		delete conn;//is never NULL
+		delete conn;//is never nullptr
 	}
 	operand(const ast& op) {
 		//
@@ -237,8 +237,8 @@ class number:public ast {
 	std::vector<ast *> ll;
 	ast *misc1;
 	public:
-	number(ast *p,ast *m1=NULL):misc1(m1) {ll.push_back(p);}
-	ast *append(ast *l,ast *m1=NULL) {
+	number(ast *p,ast *m1=nullptr):misc1(m1) {ll.push_back(p);}
+	ast *append(ast *l,ast *m1=nullptr) {
 		if (l) ll.push_back(l);
 		if (!misc1) misc1=m1;
 		return this;
@@ -253,8 +253,8 @@ class lerfustr:public ast {
 	std::vector<ast *> ll;
 	ast *misc1;
 	public:
-	lerfustr(ast *p,ast *m1=NULL):misc1(m1) {ll.push_back(p);}
-	ast *append(ast *l,ast *m1=NULL) {
+	lerfustr(ast *p,ast *m1=nullptr):misc1(m1) {ll.push_back(p);}
+	ast *append(ast *l,ast *m1=nullptr) {
 		if (l) ll.push_back(l);
 		if (!misc1) misc1=m1;
 		return this;
@@ -270,7 +270,7 @@ class lerfu:public ast {
 	ast *mod; /* LAU or TEI */
 	ast *misc1; /* FOI / BU */
 	public:
-	lerfu(ast *_v,ast *_m=NULL,ast *m1=NULL):valsi(_v),mod(_m),misc1(m1) {}
+	lerfu(ast *_v,ast *_m=nullptr,ast *m1=nullptr):valsi(_v),mod(_m),misc1(m1) {}
 	~lerfu() {
 		if (valsi) delete valsi;
 		if (mod) delete mod;
@@ -305,7 +305,7 @@ class tst:public ast {
 	ast *distance; //valsi
 	ast *offset;//RA opconn //Right-associative because next modifies previous
 	ast *interval;//
-	ast *move_offest;//only for space tense,NULL if time tense
+	ast *move_offest;//only for space tense,nullptr if time tense
 };
 class offset:public ast {
 	ast *pu;//FAhA
@@ -316,12 +316,12 @@ class offset:public ast {
 
 class interval:public ast {
 	ast *zeha;//VEhA
-	ast *viha;//NULL if time interval
+	ast *viha;//nullptr if time interval
 	ast *pu;//FAhA
 	ast *nai;
 	ast *intprops;
 	public:
-	interval(ast *_z,ast *_p,ast *_n,ast *_i,ast *_v=NULL):zeha(_z),pu(_p),nai(_n),intprops(_i),viha(_v) {}
+	interval(ast *_z,ast *_p,ast *_n,ast *_i,ast *_v=nullptr):zeha(_z),pu(_p),nai(_n),intprops(_i),viha(_v) {}
 	~interval() {
 		delete zeha;
 		delete viha;
