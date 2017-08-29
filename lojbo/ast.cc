@@ -35,7 +35,7 @@ class valsi:public ast {
 	valsi(const ast& op) {
 		//
 	}
-	const valsi& operator=(const valsi& op) {
+	valsi& operator=(const valsi& op) {
 		//
 		return *this;
 	}
@@ -180,10 +180,15 @@ class description:public ast {
 	public:
 	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(_m1) {}
 	~description() {
-
+		delete descriptor;
+		delete misc1; //for optional KU 
+		delete iquant; //inner quantifier and relative clause;
+		delete irelcl;
+		delete arg; //either sumti or selbri
 	}
 	ast *modify(ast *_d,ast *_m) {
-		//
+		descriptor=_d;
+		misc1=_m;
 	}
 	ast *appendrc(ast *c) {
 		//	
@@ -214,14 +219,14 @@ class operand:public ast { //pseudo class containing the only subtree opconn [wi
 	ast *opconn;
 	public:
 	operand(ast *_c):conn(_c) {}
-	~conn() {
+	~operand() {
 		delete conn;//is never NULL
 	}
-	term(const ast& op) {
+	operand(const ast& op) {
 		//
 	}
-	const term& operator=(const ast& op) {
-		conn=op.conn;
+	const operand& operator=(const ast& op) {
+		opconn=op.opconn;
 		return *this;
 	}
 	astype type() {return OPERAND;}
@@ -307,12 +312,23 @@ class offset:public ast {
 	ast *nai;
 	ast *zi;//VA
 };
+*/
+
 class interval:public ast {
 	ast *zeha;//VEhA
 	ast *viha;//NULL if time interval
 	ast *pu;//FAhA
 	ast *nai;
 	ast *intprops;
+	public:
+	interval(ast *_z,ast *_p,ast *_n,ast *_i,ast *_v=NULL):zeha(_z),pu(_p),nai(_n),intprops(_i),viha(_v) {}
+	~interval() {
+		delete zeha;
+		delete viha;
+		delete pu;
+		delete nai;
+		delete intprops;
+	}
 };
 class intprop:public ast {
 	ast *mod; //contains FEhE valsi or null
@@ -322,18 +338,16 @@ class intprop:public ast {
 	public:
 	intprop(ast *_p,ast *_n,ast *_num):p(_p),n(_n),num(_num) {}
 	~intprop() {
-		if (mod) delete mod;
-		if (number) delete number;
+		delete mod;
+		delete number;
 		delete property;
-		if (nai) delete nai;
+		delete nai;
 	}
 	ast *modify(ast *_m) {
 		if (!mod) mod=_m;
 		return this;
 	}
 };
-
-*/
 
 
 
