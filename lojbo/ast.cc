@@ -2,8 +2,10 @@
 //#include <string.h>
 #include <stdarg.h>
 #include "mahoste.h"
+#include <vector>
+#include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -19,7 +21,7 @@ class indicator:public ast {
 
 class valsi:public ast {
 	enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
-	enum valsi_type {VLA,CMAVO} type;
+	enum valsi_type {VLA,CMAVO} cmtype;
 	union {
 		std::string ch;
 		enum cmavo cm;
@@ -28,8 +30,8 @@ class valsi:public ast {
 	public:
 	valsi(const char *const bahecm,const char *const t/*indicators*/) {
 		if (!bahecm && !strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
-		if (dettype(t)==BRIVLA || dettype(t)==CMENE) {type=VLA;ch=t;}
-		else {type=CMAVO;cm=dettype(t);}
+		if (dettype(t)==BRIVLA || dettype(t)==CMENE) {cmtype=VLA;ch=t;}
+		else {cmtype=CMAVO;cm=dettype(t);}
 	}
 	~valsi() {}
 	valsi(const ast& op) {
@@ -81,15 +83,15 @@ class conn:public ast {
 	}
 	~conn() {
 		//
-		if (na) delete na;
-		if (se) delete se;
-		if (nai) delete nai;
-		if (joikjek) delete jekjoik;
-		if (tag) delete tag;
-		if (misc1) delete misc1;
-		if (misc2) delete misc2;
-		if (misc3) delete misc3;
-		if (misc4) delete misc4;
+		delete na;
+		delete se;
+		delete nai;
+		delete jekjoik;
+		delete tag;
+		delete misc1;
+		delete misc2;
+		delete misc3;
+		delete misc4;
 	}
 	conn(const ast& op) {
 		//
@@ -178,7 +180,7 @@ class description:public ast {
 	ast *irelcl;
 	ast *arg; //either sumti or selbri
 	public:
-	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(_m1) {}
+	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(m1) {}
 	~description() {
 		delete descriptor;
 		delete misc1; //for optional KU 
@@ -201,14 +203,14 @@ class tanru:public ast {
 	ast *linkargs;
 	public:
 	tanru(ast *_t,ast *_l):tanru_unit2(_t),linkargs(_l) {}
-	~opconn() {
+	~tanru() {
 		delete tanru_unit2;
 		if (linkargs) delete linkargs;
 	}
-	opconn(const ast& op) {
+	tanru(const ast& op) {
 		//
 	}
-	const opconn& operator=(const opconn& op) {
+	const tanru& operator=(const tanru& op) {
 		//
 		return *this;
 	}
@@ -218,9 +220,9 @@ class tanru:public ast {
 class operand:public ast { //pseudo class containing the only subtree opconn [with operands]. That is because both mex and operands might be of class opconn, so it is wrong to consider them as tree and subtree
 	ast *opconn;
 	public:
-	operand(ast *_c):conn(_c) {}
+	operand(ast *_c):opconn(_c) {}
 	~operand() {
-		delete conn;//is never nullptr
+		delete opconn;//is never nullptr
 	}
 	operand(const ast& op) {
 		//
@@ -330,13 +332,14 @@ class interval:public ast {
 		delete intprops;
 	}
 };
+
 class intprop:public ast {
 	ast *mod; //contains FEhE valsi or null
 	ast *number;
 	ast *property;
 	ast *nai;
 	public:
-	intprop(ast *_p,ast *_n,ast *_num):p(_p),n(_n),num(_num) {}
+	intprop(ast *_p,ast *_n,ast *_num):property(_p),nai(_n),number(_num) {}
 	~intprop() {
 		delete mod;
 		delete number;

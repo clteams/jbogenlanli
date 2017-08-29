@@ -1,7 +1,7 @@
 #ifndef __MAHOSTE__
 #define __MAHOSTE__ 1
 
-#define CMAVOCNT 599
+#define CMAVOCNT 599 
 
 enum cmavo {
 A,
@@ -722,7 +722,10 @@ SIhI,
 SUhI,
 TEhA,
 VAhA,
-VUhU
+VUhU,
+
+CMENE,
+BRIVLA
 };
 
 extern cmavo dettype(/*enum yytokentype sm,*/const char *const);
