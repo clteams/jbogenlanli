@@ -163,13 +163,19 @@ stag		<- S:stag (j:jek / j:joik) t:stense_modal {$$=new opconn(j,S,t);}
 		 / t:stense_modal {$$=t;}
 tense_modal	<- t:stense_modal {$$=t;} / m1:FIhO s:selbri m2:FEhU? {$$=new tagged(NULL,s,m1,m2);}
 stense_modal	<- N:NAhE? s:SE? b:BAI n:NAI? k:KI? {ast *m=new modal(s,b,n,k); $$=N?new taggged(N,m):m;}
-		 / NAhE? ((time space? / space time?) CAhA / (time space? / space time?) / CAhA) KI? / (k:KI / k:CUhE) {$$=k;}
-time		<- ZI & time_offset & time_interval
+		 / N:NAhE? ((t:time s:space? / s:space t:time?) c:CAhA / (t:time s:space? / s:space t:time?) / c:CAhA) k:KI? {ast *tense=new tense(t,s,c,k);$$=N?new tagged(N,tense):tense;}
+		 / (k:KI / k:CUhE) {$$=k;}
+time		<- ( d:ZI  o:time_offset? i:time_interval?
+		   / d:ZI? o:time_offset  i:time_interval?
+		   / d:ZI? o:time_offset? i:time_interval  ) {$$=new tst(d,o,i);}
 time_offset	<- P:PU N:NAI? Z:ZI? S:time_offset {$$=new opconn(NULL,new offset(P,N,Z),S);} / P:PU N:NAI? Z:ZI? {$$=new offset(P,N,Z);}
 time_interval	<- ( (z:ZEhA (p:PU n:NAI?)?)? i:intprops
 		   / (z:ZEhA (p:PU n:NAI?)?) i:intprops? ) {$$=new interval(z,p,n,i);}
 intprops	<- i:interval_prop S:intprops {$$=new opconn(NULL,i,S);} / i:interval_prop {$$=i;}
-space		<- VA & (FAhA NAI? VA?)+ & space_interval & (MOhI FAhA NAI? VA?)
+space		<- ( d:VA? o:space_offset? i:space_interval? (m:MOhI p:FAhA n:NAI? z:VA?)
+		   / d:VA? o:space_offset? i:space_interval  (m:MOhI p:FAhA n:NAI? z:VA?)?
+		   / d:VA? o:space_offset  i:space_interval? (m:MOhI p:FAhA n:NAI? z:VA?)?
+		   / d:VA  o:space_offset? i:space_interval? (m:MOhI p:FAhA n:NAI? z:VA?)?) {$$=new tst(d,o,i,new offset(p,n,z,m));}
 space_offset	<- P:FAhA N:NAI? Z:VA? S:space_offset {$$=new opconn(NULL,new offset(P,N,Z),S);} / P:FAhA N:NAI? Z:VA? {$$=new offset(P,N,Z);}
 space_interval	<- ( ((z:VEhA v:VIhA? / z:VEhA? v:VIhA) (p:FAhA n:NAI?)?)? i:sintprops
 		   / ((z:VEhA v:VIhA? / z:VEhA? v:VIhA) (p:FAhA n:NAI?)?) i:sintprops? ) {$$=new interval(z,p,n,i,v);}

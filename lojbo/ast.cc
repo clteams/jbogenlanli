@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP/*,BRIDI,PARAGRAPH,SELBRI?*/};
 
 class ast {
 	public:
@@ -281,7 +281,6 @@ class lerfu:public ast {
 	astype type() {return LERFU;}
 };
 
-/*
 class modal:public ast {
 	ast *se;
 	ast *bai;
@@ -297,24 +296,54 @@ class modal:public ast {
 	}
 	astype type() {return MODAL;}
 };
+
 class tense:public ast {
 	ast *time;
 	ast *space;
 	ast *aspect;
 	ast *ki; //CUhE
+	public:
+	tense(ast *_t,ast *_s,ast *_a,ast *_k):time(_t),space(_s),aspect(_a),ki(_k) {}
+	~tense() {
+		delete time;
+		delete space;
+		delete aspect;
+		delete ki;
+	}
+	astype type() {return TENSE;}
 };
+
 class tst:public ast {
 	ast *distance; //valsi
 	ast *offset;//RA opconn //Right-associative because next modifies previous
 	ast *interval;//
 	ast *move_offest;//only for space tense,nullptr if time tense
+	public:
+	tst(ast *_d,ast *_o,ast *_i,ast *_mo=nullptr):distance(_d),offset(_o),interval(_i),move_offest(_mo) {}
+	~tst() {
+		delete distance;
+		delete offset;
+		delete interval;
+		delete move_offest;
+	}
+	astype type() {return TST;}
 };
+
 class offset:public ast {
 	ast *pu;//FAhA
 	ast *nai;
 	ast *zi;//VA
+	ast *mohi;
+	public:
+	offset(ast *_p,ast *_n, ast *_z,ast *m1=nullptr):pu(_p),nai(_n),zi(_z),mohi(m1) {}
+	~offset() {
+		delete pu;
+		delete nai;
+		delete zi;
+		delete mohi;
+	}
+	astype type() {return OFFSET;}
 };
-*/
 
 class interval:public ast {
 	ast *zeha;//VEhA
@@ -331,6 +360,7 @@ class interval:public ast {
 		delete nai;
 		delete intprops;
 	}
+	astype type() {return INTERVAL;}
 };
 
 class intprop:public ast {
@@ -350,6 +380,7 @@ class intprop:public ast {
 		if (!mod) mod=_m;
 		return this;
 	}
+	astype type() {return INTPROP;}
 };
 
 
