@@ -55,9 +55,9 @@ class opconn:public ast {
 
 class conn:public ast {
 	ast *na; //contains GAhO if joik is BIhI
-	ast *misc1,*misc2,*misc3,*misc4; //contains gi if conn is forethought,also CO,BO,ZIhE,etc. 
 	ast *se,*nai,*jekjoik;
 	ast *tag;
+	ast *misc1,*misc2,*misc3,*misc4; //contains gi if conn is forethought,also CO,BO,ZIhE,etc. 
 	public:
 	conn(ast *_na,ast *_se,ast *_nai,ast *_jekjoik,ast *_tag,ast *m1=nullptr,ast *m2=nullptr,ast *m3=nullptr,ast *m4=nullptr)
 		:na(_na),se(_se),nai(_nai),jekjoik(_jekjoik),tag(_tag),misc1(m1),misc2(m2),misc3(m3),misc4(m4) {}
@@ -159,10 +159,10 @@ class sumti:public ast {
 
 class description:public ast {
 	ast *descriptor;
-	ast *misc1; //for optional KU 
+	ast *arg; //either sumti or selbri
 	ast *iquant; //inner quantifier and relative clause;
 	ast *irelcl;
-	ast *arg; //either sumti or selbri
+	ast *misc1; //for optional KU 
 	public:
 	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(m1) {}
 	~description() {
@@ -175,9 +175,11 @@ class description:public ast {
 	ast *modify(ast *_d,ast *_m) {
 		descriptor=_d;
 		misc1=_m;
+		return this;
 	}
 	ast *appendrc(ast *c) {
 		//	
+		return this;
 	}
 	astype type() {return DESCRIPTION;}
 };
@@ -323,10 +325,10 @@ class offset:public ast {
 
 class interval:public ast {
 	ast *zeha;//VEhA
-	ast *viha;//nullptr if time interval
 	ast *pu;//FAhA
 	ast *nai;
 	ast *intprops;
+	ast *viha;//nullptr if time interval
 	public:
 	interval(ast *_z,ast *_p,ast *_n,ast *_i,ast *_v=nullptr):zeha(_z),pu(_p),nai(_n),intprops(_i),viha(_v) {}
 	~interval() {
@@ -340,10 +342,10 @@ class interval:public ast {
 };
 
 class intprop:public ast {
-	ast *mod; //contains FEhE valsi or null
-	ast *number;
 	ast *property;
 	ast *nai;
+	ast *number;
+	ast *mod=nullptr; //contains FEhE valsi or null
 	public:
 	intprop(ast *_p,ast *_n,ast *_num):property(_p),nai(_n),number(_num) {}
 	~intprop() {
@@ -365,11 +367,12 @@ astype subtreetype(ast *st) {
 	astype t;
 	switch(t=st->type()) {
 		case TAGGED: return subtreetype(st->subtree);
-		case CONN:
+		case CONN: {
 			astype l=subtreetype(st->left);
 			astype r=subtreetype(st->right);
 			if(l!=r);
 			return l;
+		}
 		default: return t;
 	}
 }
