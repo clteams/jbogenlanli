@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP/*,BRIDI,PARAGRAPH,SELBRI?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI/*,PARAGRAPH?*/};
 
 class ast {
 	public:
@@ -19,6 +19,8 @@ class indicator:public ast {
 	astype type() {return INDICATOR;}
 };
 
+/* general */
+
 class valsi:public ast {
 	enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
 	enum valsi_type {VLA,CMAVO} cmtype;
@@ -29,18 +31,11 @@ class valsi:public ast {
 	//indicators?
 	public:
 	valsi(const char *const bahecm,const char *const t/*indicators*/) {
-		if (!bahecm && !strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
+		if (!bahecm || !strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
 		if (dettype(t)==BRIVLA || dettype(t)==CMENE) {cmtype=VLA;ch=t;}
 		else {cmtype=CMAVO;cm=dettype(t);}
 	}
 	~valsi() {}
-	valsi(const ast& op) {
-		//
-	}
-	valsi& operator=(const valsi& op) {
-		//
-		return *this;
-	}
 	astype type() {return VALSI;}
 };
 
@@ -53,13 +48,6 @@ class opconn:public ast {
 		delete left;
 		delete right;
 		delete conn;
-	}
-	opconn(const ast& op) {
-		//
-	}
-	const opconn& operator=(const opconn& op) {
-		//
-		return *this;
 	}
 	astype type() {return OPCONN;}
 };
@@ -92,13 +80,6 @@ class conn:public ast {
 		delete misc2;
 		delete misc3;
 		delete misc4;
-	}
-	conn(const ast& op) {
-		//
-	}
-	const conn& operator=(const ast& op) {
-		//
-		return *this;
 	}
 	astype type() {return CONN;}
 
@@ -133,6 +114,29 @@ class tagged:public ast {
 	astype type() {return TAGGED;}
 };
 
+/* //this class contains valsi(that sumti separates different clauses), which don't have semantical function, and are kept only because they may contain indicators
+class miscvalsi:public ast {
+	ast *subtree;
+	ast *misc1;
+	ast *misc2;
+	miscvalsi(ast *_s,ast *_m1,ast *_m2=nullptr):subtree(_s),misc1(_m1),misc2(_m2) {}
+}; */
+
+/* bridi/bridi substructures */
+
+class bridi:public ast {
+	ast *selbri;
+	ast *head_terms,*tail_terms;
+	public:
+	bridi(ast *_s,ast *_ht,ast *_tt):selbri(_s),head_terms(_ht),tail_terms(_tt) {}
+	~bridi() {
+		delete bridi;
+		delete head_terms;
+		delete tail_terms;
+	}
+	astype type() {return BRIDI;}
+};
+
 class term:public ast {
 	ast *tag;/*(tag/FA/NA). nullptr if none)*/
 	ast *sumti; /*or termset or KU*/
@@ -141,13 +145,6 @@ class term:public ast {
 	~term() {
 		if (tag) delete tag;
 		if (sumti) delete sumti;
-	}
-	term(const ast& op) {
-		//
-	}
-	const term& operator=(const ast& op) {
-		//
-		return *this;
 	}
 	astype type() {return TERM;}
 };
@@ -162,13 +159,6 @@ class sumti:public ast {
 		if (oquant) delete oquant;
 		if (orelcl) delete orelcl;
 		if (sumti6) delete sumti6;
-	}
-	sumti(const ast& op) {
-	        //
-	}
-	const sumti& operator=(const ast& op) {
-	        //
-                return *this;
 	}
         astype type() {return SUMTI;}
 };
@@ -207,15 +197,10 @@ class tanru:public ast {
 		delete tanru_unit2;
 		if (linkargs) delete linkargs;
 	}
-	tanru(const ast& op) {
-		//
-	}
-	const tanru& operator=(const tanru& op) {
-		//
-		return *this;
-	}
 	astype type() {return TANRU;}
 };
+
+/* mex */
 
 class operand:public ast { //pseudo class containing the only subtree opconn [with operands]. That is because both mex and operands might be of class opconn, so it is wrong to consider them as tree and subtree
 	ast *opconn;
@@ -224,16 +209,11 @@ class operand:public ast { //pseudo class containing the only subtree opconn [wi
 	~operand() {
 		delete opconn;//is never nullptr
 	}
-	operand(const ast& op) {
-		//
-	}
-	const operand& operator=(const ast& op) {
-		opconn=op.opconn;
-		return *this;
-	}
 	astype type() {return OPERAND;}
 
 };
+
+/* numbers/lerfu */
 
 class number:public ast {
 	std::vector<ast *> ll;
@@ -280,6 +260,8 @@ class lerfu:public ast {
 	}
 	astype type() {return LERFU;}
 };
+
+/* modals */
 
 class modal:public ast {
 	ast *se;
@@ -383,7 +365,7 @@ class intprop:public ast {
 	astype type() {return INTPROP;}
 };
 
-
+/* end */
 
 astype subtreetype(ast *st) {
 	astype t;

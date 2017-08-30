@@ -32,7 +32,7 @@ bridi_tail_1	<- bridi_tail_1 gihek bridi_tail_2 tail_terms
 		 / t:bridi_tail_2 {$$=t;}
 bridi_tail_2	<- bridi_tail_3 gihek stag? BO bridi_tail_2 tail_terms
 		 / t:bridi_tail_3 {$$=t;}
-bridi_tail_3	<- selbri tail_terms / gek_sentence
+bridi_tail_3	<- selbri tail_terms / t:gek_sentence {$$=t;}
 gek_sentence	<- j:gek S:subsentence m1:GI N:NAI? t:subsentence tt:tail_terms {$$=new opconn(j->modify(N,NULL,m1),S,t);/*append tt to each bridi_tail in each subsentence */}
 		 / t:tag? m1:KE s:gek_sentence m2:KEhE? {$$=new tagged(t,s,m1,m2);}
 		 / t:NA s:gek_sentence {$$=new tagged(t,s);}
@@ -49,7 +49,7 @@ term		<- s:sumti {$$=new term(NULL,s);}
 		 / N:NA K:KU {$$=new term(N,K);}
 termset		<- m2:NUhI j:gek S:terms m3:NUhU? m1:GI N:NAI? t:terms m4:NUhU? {$$=new opconn(j->modify(N,NULL,m1,m2,m3,m4),S,t);}
 		 / m1:NUhI t:terms m2:NUhU? {$$=new tagged(NULL,t,m1,m2);}
-sumti		<- sumti_1 (VUhO relative_clauses)?
+sumti		<- s:sumti_1 (v:VUhO rc:relative_clauses)? {$$=new tagged(rc,s,v);}
 sumti_1		<- t:sumti_2 (j:ek / j:joik) T:stag? m1:KE S:sumti m2:KEhE? {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
 		 / t:sumti_2 {$$=t;}
 sumti_2		<- S:sumti_2 j:joik_ek t:sumti_3 {$$=new opconn(j,S,t);}
