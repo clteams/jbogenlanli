@@ -130,7 +130,7 @@ class bridi:public ast {
 	public:
 	bridi(ast *_s,ast *_ht,ast *_tt):selbri(_s),head_terms(_ht),tail_terms(_tt) {}
 	~bridi() {
-		delete bridi;
+		delete selbri;
 		delete head_terms;
 		delete tail_terms;
 	}
