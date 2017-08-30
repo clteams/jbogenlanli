@@ -104,13 +104,6 @@ class tagged:public ast {
 		if (misc1) delete misc1;
 		if (misc2) delete misc2;
 	}
-	tagged(const ast& op) {
-		//
-	}
-	const tagged& operator=(const ast& op) {
-		//
-		return *this;
-	}
 	astype type() {return TAGGED;}
 };
 
