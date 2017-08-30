@@ -11,6 +11,7 @@ class ast {
 	public:
 	virtual ~ast() {}
 	virtual astype type() =0;
+	virtual ast &operator=(const ast &a) final = delete;
 };
 
 class indicator:public ast {
