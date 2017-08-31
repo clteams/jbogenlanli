@@ -41,7 +41,7 @@ class valsi:public ast {
 };
 
 class opconn:public ast {
-	ast *conn;
+	ast *conn; //conn is of type conn or valsi or tagged(1 case)
 	ast *left,*right;
 	public:
 	opconn(ast *c,ast *l,ast *r):conn(c),left(l),right(r) {}
@@ -57,7 +57,7 @@ class conn:public ast {
 	ast *na; //contains GAhO if joik is BIhI
 	ast *se,*nai,*jekjoik;
 	ast *tag;
-	ast *misc1,*misc2,*misc3,*misc4; //contains gi if conn is forethought,also CO,BO,ZIhE,etc. 
+	ast *misc1,*misc2,*misc3,*misc4; //contains gi if conn is forethought
 	public:
 	conn(ast *_na,ast *_se,ast *_nai,ast *_jekjoik,ast *_tag,ast *m1=nullptr,ast *m2=nullptr,ast *m3=nullptr,ast *m4=nullptr)
 		:na(_na),se(_se),nai(_nai),jekjoik(_jekjoik),tag(_tag),misc1(m1),misc2(m2),misc3(m3),misc4(m4) {}
