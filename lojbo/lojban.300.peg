@@ -185,10 +185,12 @@ free		<- SEI (terms CU?)? selbri SEhU?
 		 / SOI sumti sumti? SEhU?
 		 / vocative relative_clauses? selbri relative_clauses? DOhU?
 		 / vocative relative_clauses? CMENE+ relative_clauses? DOhU?
-		 / vocative sumti? DOhU?
+		 / v:vocative s:sumti? m1:DOhU? {$$=new tagged(v,s,m1);
 		 / (number / lerfu_string) MAI
 		 / T:TO t:text m1:TOI? {$$=new tagged(T,t,m1);}
 		 / XI (number / lerfu_string) BOI? / XI VEI mex VEhO?
 vocative	<- (COI NAI?)+ & DOI
 indicators	<- FUhE? indicator+
 indicator	<-  (UI / CAI) NAI? / Y / DAhO / FUhO / free
+
+cmene		<- CMENE cmene / CMENE

@@ -9,9 +9,11 @@ enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUS
 
 class ast {
 	public:
+	ast() {}
 	virtual ~ast() {}
-	virtual astype type() =0;
+	ast(const ast &a) = delete;
 	virtual ast &operator=(const ast &a) final = delete;
+	virtual astype type() =0;
 };
 
 class indicator:public ast {
