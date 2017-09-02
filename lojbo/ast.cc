@@ -26,7 +26,7 @@ class indicator:public ast {
 /* general */
 
 class valsi:public ast {
-	enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
+	//enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
 	cmavo cm;
 	std::string ch;
 	//indicators?
@@ -117,7 +117,16 @@ class miscvalsi:public ast {
 }; */
 
 class cmene:public ast {
+	std::deque<ast *> ll;
 	public:
+	cmene(ast *_n) {ll.push_front(_n);}
+	ast *append_front(ast *_n) {
+		ll.push_front(_n);
+		return this;
+	}
+	~cmene() {
+		for(auto m : ll) delete m;
+	}
 	astype type() {return CMENE;}
 };
 

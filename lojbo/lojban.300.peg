@@ -1,6 +1,6 @@
 %value "ast *"
 
-text		<- NAI* (CMENE+ / indicators?) joik_jek? text_1
+text		<- NAI* (cmene / indicators?) joik_jek? text_1
 text_1		<- ((I (jek / joik)? (stag? BO)?)+ / NIhO+)? paragraphs?
 paragraphs	<- paragraph <NIhO+> paragraphs
 		 / t:paragraph {$$=t;}
@@ -63,7 +63,7 @@ sumti_5		<- q:quantifier? s:sumti_6 c:relative_clauses? {$$=new sumti(s,q,c);}
 sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree*/,m1,m2);}
 		 / t:KOhA {$$=t;}
 		 / l:lerfu_string B:BOI? {$$=l->append(nullptr,B);}
-		 / LA relative_clauses? CMENE+
+		 / d:LA c:relative_clauses? s:cmene {$$=new description(d,s,nullptr,c);}
 		 / (d:LA / d:LE) s:sumti_tail m1:KU? {$$=s->modify(d,m1);}
 		 / L:LI m:mex m1:LOhO? {$$=new tagged(L,m,m1);}
 		 / t:ZO s:any_word {$$=new tagged(nullptr,s,t);}
@@ -92,13 +92,14 @@ selbri_5	<- t:selbri_6 (j:jek / j:joik) T:stag? m1:BO S:selbri_5 {$$=new opconn(
 selbri_6	<- t:tanru_unit m1:BO S:selbri_6 {$$=new opconn(m1,t,S);}
 		 / n:NAhE? j:guhek S:selbri m1:GI N:NAI? t:selbri_6 {ast *node=new opconn(j->modify(N,nullptr,m1),S,t); $$=n?new tagged(n,node):node;}
 		 / t:tanru_unit {$$=t;}
-tanru_unit	<- tanru_unit CEI tanru_unit_1
+tanru_unit	<- S:tanru_unit m1:CEI t:tanru_unit_1 {$$=new opconn(m1,S,t);}
 		 / t:tanru_unit_1 {$$=t;}
 tanru_unit_1	<- t:tanru_unit_2 l:linkargs? {$$=new tanru(t,l);}
 tanru_unit_2	<- t:BRIVLA {$$=t;}
 		 / g:GOhA r:RAhO? {$$=r?new tagged(r,g):g;}
-		 / KE selbri_3 KEhE?
-		 / ME sumti MEhU? MOI? / (number / lerfu_string) MOI
+		 / m1:KE s:selbri_3 m2:KEhE? {$$=new tagged(nullptr,s,m1,m2);}
+		 / m1:ME s:sumti m2:MEhU? M:MOI? {$$=new tagged(M,s,m1,m2);}
+		 / (n:number / n:lerfu_string) M:MOI {$$=new tagged(M,n);}
 		 / N:NUhA m:mex_operator {$$=new tagged(nullptr,m,N);}
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);}
@@ -109,7 +110,7 @@ nu		<- S:nu j:joik_jek s:NU t:NAI? {$$=new opconn(j,S,t?new tagged(t,s):s);}
 		 / s:NU t:NAI? {$$=t?new tagged(t,s):s;}
 linkargs	<- m1:BE l:links m2:BEhO? {$$=new tagged(nullptr,l,m1,m2);}
 links		<- t:term m1:BEI S:links {$$=new opconn(m1,t,S);} / t:term {$$=t;}
-quantifier	<- number BOI? / VEI mex VEhO?
+quantifier	<- l:number B:BOI? {$$=l->append(nullptr,B);} / m1:VEI s:mex m2:VEhO? {$$=new tagged(nullptr,s,m1,m2);}
 mex		<- m:mex_0 {$$=m;}
 		 / f:FUhA s:rp_expression {$$=new tagged(nullptr,s,f);}
 mex_0		<- S:mex_0 j:operator t:mex_1 {$$=new opconn(j,S,t);}
@@ -184,7 +185,7 @@ interval_prop	<- (num:number p:ROI n:NAI? / p:TAhE n:NAI? / p:ZAhO n:NAI?) {$$=n
 free		<- SEI (terms CU?)? selbri SEhU?
 		 / SOI sumti sumti? SEhU?
 		 / vocative relative_clauses? selbri relative_clauses? DOhU?
-		 / vocative relative_clauses? CMENE+ relative_clauses? DOhU?
+		 / vocative relative_clauses? cmene relative_clauses? DOhU?
 		 / v:vocative s:sumti? m1:DOhU? {$$=new tagged(v,s,m1);
 		 / (number / lerfu_string) MAI
 		 / T:TO t:text m1:TOI? {$$=new tagged(T,t,m1);}
@@ -193,4 +194,4 @@ vocative	<- (COI NAI?)+ & DOI
 indicators	<- FUhE? indicator+
 indicator	<-  (UI / CAI) NAI? / Y / DAhO / FUhO / free
 
-cmene		<- CMENE cmene / CMENE
+cmene		<- n:CMENE c:cmene {$$=(static_cast<cmene *>(c))->append(n); / n:CMENE {$$=new cmene(n);}
