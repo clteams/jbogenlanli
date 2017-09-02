@@ -3,7 +3,7 @@
 
 #define CMAVOCNT 599 
 
-enum cmavo {
+enum class cmavo {
 A,
 E,
 O,

@@ -3,9 +3,10 @@
 #include <stdarg.h>
 #include "mahoste.h"
 #include <vector>
+#include <deque>
 #include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI/*,PARAGRAPH?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE/*,PARAGRAPH?*/};
 
 class ast {
 	public:
@@ -26,17 +27,14 @@ class indicator:public ast {
 
 class valsi:public ast {
 	enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
-	enum valsi_type {VLA,CMAVO} cmtype;
-	union {
-		std::string ch;
-		enum cmavo cm;
-	};
+	cmavo cm;
+	std::string ch;
 	//indicators?
 	public:
 	valsi(const char *const bahecm,const char *const t/*indicators*/) {
-		if (!bahecm || !strlen(bahecm)) emph=nobz; else emph=dettype(bahecm);
-		if (dettype(t)==BRIVLA || dettype(t)==CMENE) {cmtype=VLA;ch=t;}
-		else {cmtype=CMAVO;cm=dettype(t);}
+		//if (!bahecm || !strlen(bahecm)) emph=nobz; else emph=static_cast<>(dettype(bahecm));
+		cm=dettype(t);
+		ch=(cm==cmavo::BRIVLA || cm==cmavo::CMENE)?t:"";
 	}
 	~valsi() {}
 	astype type() {return VALSI;}
@@ -118,6 +116,11 @@ class miscvalsi:public ast {
 	miscvalsi(ast *_s,ast *_m1,ast *_m2=nullptr):subtree(_s),misc1(_m1),misc2(_m2) {}
 }; */
 
+class cmene:public ast {
+	public:
+	astype type() {return CMENE;}
+};
+
 /* bridi/bridi substructures */
 
 class bridi:public ast {
@@ -161,7 +164,7 @@ class sumti:public ast {
 
 class description:public ast {
 	ast *descriptor;
-	ast *arg; //either sumti or selbri
+	ast *arg; //either sumti or selbri or cmene
 	ast *iquant; //inner quantifier and relative clause;
 	ast *irelcl;
 	ast *misc1; //for optional KU 

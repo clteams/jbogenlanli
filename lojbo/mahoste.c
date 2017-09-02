@@ -5,7 +5,7 @@
 
 struct cmm {
   const char *l;
-  enum cmavo type;
+  cmavo type;
   //enum yytokentype selmaho;
 };
 
