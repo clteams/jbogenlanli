@@ -10,10 +10,10 @@ enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUS
 
 class ast {
 	public:
-	ast() {}
+	ast() = default;
 	virtual ~ast() {}
 	ast(const ast &a) = delete;
-	virtual ast &operator=(const ast &a) final = delete;
+	virtual void operator=(const ast &a) final = delete;
 	virtual astype type() =0;
 };
 
@@ -31,10 +31,9 @@ class valsi:public ast {
 	std::string ch;
 	//indicators?
 	public:
-	valsi(const char *const bahecm,const char *const t/*indicators*/) {
+	valsi(const char *const bahecm,const char *const t/*indicators*/):cm(dettype(t)),ch("") {
 		//if (!bahecm || !strlen(bahecm)) emph=nobz; else emph=static_cast<>(dettype(bahecm));
-		cm=dettype(t);
-		ch=(cm==cmavo::BRIVLA || cm==cmavo::CMENE)?t:"";
+		if (cm==cmavo::BRIVLA || cm==cmavo::CMENE) ch=t;
 	}
 	~valsi() {}
 	astype type() {return VALSI;}
@@ -119,7 +118,7 @@ class miscvalsi:public ast {
 class cmene:public ast {
 	std::deque<ast *> ll;
 	public:
-	cmene(ast *_n) {ll.push_front(_n);}
+	cmene(ast *_n):ll(1) {ll.push_front(_n);}
 	ast *append_front(ast *_n) {
 		ll.push_front(_n);
 		return this;
@@ -226,10 +225,10 @@ class operand:public ast { //pseudo class containing the only subtree opconn [wi
 /* numbers/lerfu */
 
 class number:public ast {
-	std::vector<ast *> ll;
 	ast *misc1;
+	std::vector<ast *> ll;
 	public:
-	number(ast *p,ast *m1=nullptr):misc1(m1) {ll.push_back(p);}
+	number(ast *p,ast *m1=nullptr):misc1(m1),ll(1) {ll.push_back(p);}
 	ast *append(ast *l,ast *m1=nullptr) {
 		if (l) ll.push_back(l);
 		if (!misc1) misc1=m1;
@@ -242,10 +241,10 @@ class number:public ast {
 };
 
 class lerfustr:public ast {
-	std::vector<ast *> ll;
 	ast *misc1;
+	std::vector<ast *> ll;
 	public:
-	lerfustr(ast *p,ast *m1=nullptr):misc1(m1) {ll.push_back(p);}
+	lerfustr(ast *p,ast *m1=nullptr):misc1(m1),ll(1) {ll.push_back(p);}
 	ast *append(ast *l,ast *m1=nullptr) {
 		if (l) ll.push_back(l);
 		if (!misc1) misc1=m1;
