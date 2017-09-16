@@ -6,7 +6,7 @@
 #include <deque>
 #include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE/*,PARAGRAPH?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE,MISCV/*,PARAGRAPH?*/};
 
 class ast {
 	public:
@@ -107,13 +107,19 @@ class tagged:public ast {
 	astype type() {return TAGGED;}
 };
 
-/* //this class contains valsi(that sumti separates different clauses), which don't have semantical function, and are kept only because they may contain indicators
+//this class contains valsi, which don't have semantical function, and are kept only because they may contain indicators
 class miscvalsi:public ast {
 	ast *subtree;
 	ast *misc1;
 	ast *misc2;
 	miscvalsi(ast *_s,ast *_m1,ast *_m2=nullptr):subtree(_s),misc1(_m1),misc2(_m2) {}
-}; */
+	~miscvalsi() {
+		delete subtree;
+		delete misc1;
+		delete misc2;
+	}
+	astype type() {return MISCV;}
+};
 
 class cmene:public ast {
 	std::deque<ast *> ll;
@@ -133,12 +139,11 @@ class cmene:public ast {
 
 class bridi:public ast {
 	ast *selbri;
-	ast *head_terms,*tail_terms;
+	ast *tail_terms;
 	public:
-	bridi(ast *_s,ast *_ht,ast *_tt):selbri(_s),head_terms(_ht),tail_terms(_tt) {}
+	bridi(ast *_s,ast *_tt):selbri(_s),tail_terms(_tt) {}
 	~bridi() {
 		delete selbri;
-		delete head_terms;
 		delete tail_terms;
 	}
 	astype type() {return BRIDI;}
