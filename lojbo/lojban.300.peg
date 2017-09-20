@@ -1,8 +1,9 @@
 %value "ast *"
 
-text		<- NAI* (cmene / indicators?) joik_jek? text_1 {}
+text		<- NAI* (cmene / indicators?) joik_jek? text_1 FAhO? EOF {}
 text_1		<- ((I (jek / joik)? (stag? BO)?)+ / NIhO+)? paragraphs? {}
-paragraphs	<- t:paragraph {$$=t;} (<NIhO+> S:paragraphs {$$=new opconn(/**/,$$,S);})?
+paragraphs	<- t:paragraph {$$=t;} (c:niho S:paragraphs {$$=new opconn(c,$$,S);})?
+niho		<- S:NIhO {$$=S;} (t:NIhO {$$=new opconn(nullptr,$$,t);})+
 paragraph	<- (S:statement / S:fragment) {$$=S;} (m1:I (t:statement / t:fragment)? {$$=new opconn(m1,$$,t);})*
 statement	<- t:statement_1 {$$=t;}
 		 / p:prenex s:statement {$$=static_cast<tagged *>(p)->modify(nullptr,s);}
@@ -85,7 +86,7 @@ tanru_unit_2	<- t:BRIVLA {$$=t;}
 		 / N:NUhA m:mex_operator {$$=new tagged(nullptr,m,N);}
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);}
-		 / any_word (ZEI any_word)+
+		 / any_word (ZEI any_word)+ {}
 		 / N:NAhE s:tanru_unit_2 {$$=new tagged(N,s);}
 		 / t:nu s:subsentence m1:KEI? {$$=new tagged(t,s,m1);}
 nu		<- S:NU T:NAI? {$$=T?new tagged(T,S):S;} (j:joik_jek s:NU t:NAI? {$$=new opconn(j,$$,t?new tagged(t,s):s);})*
