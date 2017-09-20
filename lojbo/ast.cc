@@ -6,7 +6,7 @@
 #include <deque>
 #include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,INDICATOR,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE,MISCV/*,PARAGRAPH?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE,MISCV/*,PARAGRAPH?*/};
 
 class ast {
 	public:
@@ -17,21 +17,15 @@ class ast {
 	virtual astype type() =0;
 };
 
-class indicator:public ast {
-	//
-	public:
-	astype type() {return INDICATOR;}
-};
-
 /* general */
 
 class valsi:public ast {
 	//enum {nobz=0,bahe=BAhE,zahe=ZAhE} emph;
 	cmavo cm;
 	std::string ch;
-	//indicators?
+	ast *inds;
 	public:
-	valsi(const char *const bahecm,const char *const t/*indicators*/):cm(dettype(t)),ch("") {
+	valsi(const char *const bahecm,const char *const t,ast *_i):cm(dettype(t)),ch(""),inds(_i) {
 		//if (!bahecm || !strlen(bahecm)) emph=nobz; else emph=static_cast<>(dettype(bahecm));
 		if (cm==cmavo::BRIVLA || cm==cmavo::CMENE) ch=t;
 	}
@@ -134,8 +128,6 @@ class cmene:public ast {
 	}
 	astype type() {return CMENE;}
 };
-
-/* bridi/bridi substructures */
 
 class bridi:public ast {
 	ast *selbri;
