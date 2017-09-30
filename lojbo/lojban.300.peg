@@ -1,7 +1,9 @@
 %value "ast *"
 
-text		<- NAI* (cmene / indicators?) joik_jek? text_1 FAhO? EOF {}
-text_1		<- ((I (jek / joik)? (stag? BO)?)+ / NIhO+)? paragraphs? {}
+text		<- n:nais? (m:cmene / m:indicators / m:free)? j:joik_jek? t:text_1 FAhO? EOF {$$=new text(n,m,j,t);}
+nais		<- N:NAI {$$=N1;} (n:nais {$$=new opconn(nullptr,N,n);})?
+text_1		<- (c:text_part_1 / c:niho)? p:paragraphs? {$$=c?new tagged(c,p):p;}
+text_part_1	<- (I (jek / joik)? (stag? BO)?) {} (text_part_1 {})?
 paragraphs	<- t:paragraph {$$=t;} (c:niho S:paragraphs {$$=new opconn(c,$$,S);})?
 niho		<- S:NIhO {$$=S;} (t:NIhO {$$=new opconn(nullptr,$$,t);})+
 paragraph	<- (S:statement / S:fragment) {$$=S;} (m1:I (t:statement / t:fragment)? {$$=new opconn(m1,$$,t);})*
@@ -16,12 +18,12 @@ fragment	<- (
 		 / t:gihek
 		 / t:quantifier
 		 / t:NA
-		 / t:terms VAU?
 		 / t:prenex
 		 / t:relative_clauses
 		 / t:links
 		 / t:linkargs
-		 ) {}
+		 ) {$$=t;}
+		 / t:terms m1:VAU? {$$=m1?new miscvalsi(t,m1):t;}
 prenex		<- t:terms m1:ZOhU {$$=new tagged(t,nullptr,m1);}
 sentence	<- (t:terms m1:CU?)? s:bridi_tail {$$=t?new tagged(t,s,m1):s;}
 subsentence	<- s:sentence {$$=s;} / p:prenex s:subsentence {$$=static_cast<tagged *>(p)->modify(nullptr,s);}

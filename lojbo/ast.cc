@@ -6,7 +6,7 @@
 #include <deque>
 #include <string>
 
-enum astype {VALSI,OPCONN,CONN,TAGGED,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE,MISCV/*,PARAGRAPH?*/};
+enum astype {VALSI,OPCONN,CONN,TAGGED,SUMTI,TERM,OPERAND,NUMBER,LERFUSTR,LERFU,TANRU,DESCRIPTION,MODAL,TENSE,TST,OFFSET,INTERVAL,INTPROP,BRIDI,CMENE,MISCV,TEXT};
 
 class ast {
 	public:
@@ -115,10 +115,26 @@ class miscvalsi:public ast {
 	astype type() {return MISCV;}
 };
 
+class text:public ast {
+	ast *nai;
+	ast *modifier;
+	ast *jekjoik;
+	ast *text;
+	public:
+	text(ast *_n,ast *_m,ast *_j,ast *_t):nai(_n),modifier(_m),jekjoik(_j),text(_t) {}
+	~text() {
+		delete nai;
+		delete modifier;
+		delete jekjoik;
+		delete text;
+	}
+	astype type() {return TEXT;}
+}
+
 class cmene:public ast {
 	std::deque<ast *> ll;
 	public:
-	cmene(ast *_n):ll(1) {ll.push_front(_n);}
+	explicit cmene(ast *_n):ll(1) {ll.push_front(_n);}
 	ast *append_front(ast *_n) {
 		ll.push_front(_n);
 		return this;
@@ -211,7 +227,7 @@ class tanru:public ast {
 class operand:public ast { //pseudo class containing the only subtree opconn [with operands]. That is because both mex and operands might be of class opconn, so it is wrong to consider them as tree and subtree
 	ast *opconn;
 	public:
-	operand(ast *_c):opconn(_c) {}
+	explicit operand(ast *_c):opconn(_c) {}
 	~operand() {
 		delete opconn;//is never nullptr
 	}
