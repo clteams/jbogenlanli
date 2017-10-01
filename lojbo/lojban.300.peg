@@ -1,181 +1,174 @@
 %value "ast *"
 
-text		<- NAI* (CMENE+ / indicators?) joik_jek? text_1
-text_1		<- ((I (jek / joik)? (stag? BO)?)+ / NIhO+)? paragraphs?
-paragraphs	<- paragraph <NIhO+> paragraphs
-		 / t:paragraph {$$=t;}
-paragraph	<- S:paragraph m1:I (t:statement / t:fragment)? {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
-		 / (t:statement / t:fragment) {$$=t;}
+text		<- n:nais? (m:cmene / m:indicators / m:free)? j:joik_jek? t:text_1 FAhO? EOF {$$=new text(n,m,j,t);}
+nais		<- N:NAI {$$=N1;} (n:nais {$$=new opconn(nullptr,N,n);})?
+text_1		<- (c:text_part_1 / c:niho)? p:paragraphs? {$$=c?new tagged(c,p):p;}
+text_part_1	<- (I (jek / joik)? (stag? BO)?) {} (text_part_1 {})?
+paragraphs	<- t:paragraph {$$=t;} (c:niho S:paragraphs {$$=new opconn(c,$$,S);})?
+niho		<- S:NIhO {$$=S;} (t:NIhO {$$=new opconn(nullptr,$$,t);})+
+paragraph	<- (S:statement / S:fragment) {$$=S;} (m1:I (t:statement / t:fragment)? {$$=new opconn(m1,$$,t);})*
 statement	<- t:statement_1 {$$=t;}
-		 / p:prenex s:statement {$$=new tagged(p,s,NULL);}
-statement_1	<- S:statement_1 m1:I j:joik_jek t:statement_2? {$$=new opconn(j->modify(NULL,NULL,NULL,m1),S,t);}
-		 / t:statement_2 {$$=t;}
-statement_2	<- t:statement_3 m1:I (j:jek / j:joik)? T:stag? m2:BO S:statement_2? {$$=new opconn(j?j->modify(NULL,T,m1,m2):new conn(NULL,NULL,NULL,NULL,T,m1,m2),t,S);}
-		 / t:statement_3 {$$=t;}
+		 / p:prenex s:statement {$$=static_cast<tagged *>(p)->modify(nullptr,s);}
+statement_1	<- S:statement_2 {$$=S;} (m1:I j:joik_jek t:statement_2? {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,nullptr,m1),$$,t);})*
+statement_2	<- t:statement_3 {$$=t;} (m1:I j:joik_jek? T:stag? m2:BO S:statement_2? {$$=new opconn(j?static_cast<conn *>(j)->modify(nullptr,T,m1,m2):new tagged(T,m1,m2),$$,S);})?
 statement_3	<- t:sentence {$$=t;}
 		 / t:tag? TE:TUhE t1:text_1 TU:TUhU? {$$=new tagged(t,t1,TE,TU);}
-fragment	<- ek
-		 / gihek
-		 / quantifier
-		 / NA
-		 / terms VAU?
-		 / prenex 
-		 / relative_clauses
-		 / links
-		 / linkargs
-prenex		<- terms ZOhU
-sentence	<- (terms CU?)? bridi_tail
-subsentence	<- sentence / prenex subsentence
-bridi_tail	<- bridi_tail_1 gihek stag? KE bridi_tail KEhE? tail_terms
-		 / t:bridi_tail_1 {$$=t;}
-bridi_tail_1	<- bridi_tail_1 gihek bridi_tail_2 tail_terms
-		 / t:bridi_tail_2 {$$=t;}
-bridi_tail_2	<- bridi_tail_3 gihek stag? BO bridi_tail_2 tail_terms
-		 / t:bridi_tail_3 {$$=t;}
-bridi_tail_3	<- selbri tail_terms / gek_sentence
-gek_sentence	<- gek subsentence m1:GI N:NAI subsentence tail_terms 
-		 / tag? KE gek_sentence KEhE?
-		 / NA gek_sentence
-tail_terms	<- terms? VAU?
-terms		<- S:terms t:terms_1 {$$=new opconn(NULL,S,t);}
-		 / t:terms_1 {$$=t;}
-terms_1		<- S:terms_1 m1:PEhE j:joik_jek t:terms_2 {$$=new opconn(j->modify(NULL,NULL,m1),S,t);}
-		 / t:terms_2 {$$=t;}
-terms_2		<- S:terms_2 m1:CEhE t:term {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
-		 / t:term {$$=t;}
-term		<- t:sumti {$$=t;}
-		 / (tag / FA) (sumti / KU?)
-		 / termset
-		 / NA KU
-termset		<- NUhI gek terms NUhU? m1:GI N:NAI terms NUhU? 
-		 / NUhI terms NUhU?
-sumti		<- sumti_1 (VUhO relative_clauses)?
-sumti_1		<- t:sumti_2 (j:ek / j:joik) T:stag? m1:KE S:sumti m2:KEhE? {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
-		 / t:sumti_2 {$$=t;}
-sumti_2		<- S:sumti_2 j:joik_ek t:sumti_3 {$$=new opconn(j,S,t);}
-		 / t:sumti_3 {$$=t;}
-sumti_3		<- t:sumti_4 (j:ek / j:joik) T:stag? m1:BO S:sumti_3 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
-		 / t:sumti_4 {$$=t;}
+fragment	<- (
+		   t:ek
+		 / t:gihek
+		 / t:quantifier
+		 / t:NA
+		 / t:prenex
+		 / t:relative_clauses
+		 / t:links
+		 / t:linkargs
+		 ) {$$=t;}
+		 / t:terms m1:VAU? {$$=m1?new miscvalsi(t,m1):t;}
+prenex		<- t:terms m1:ZOhU {$$=new tagged(t,nullptr,m1);}
+sentence	<- (t:terms m1:CU?)? s:bridi_tail {$$=t?new tagged(t,s,m1):s;}
+subsentence	<- s:sentence {$$=s;} / p:prenex s:subsentence {$$=static_cast<tagged *>(p)->modify(nullptr,s);}
+bridi_tail	<- t:bridi_tail_1 {$$=t;} (j:gihek T:stag? m1:KE S:bridi_tail m2:KEhE? tt:tail_terms {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1,m2),$$,S);})?
+bridi_tail_1	<- S:bridi_tail_2 {$$=S;} (j:gihek t:bridi_tail_2 tt:tail_terms {$$=new opconn(j,$$,t);})*
+bridi_tail_2	<- t:bridi_tail_3 {$$=t;} (j:gihek T:stag? m1:BO S:bridi_tail_2 tt:tail_terms {$$=new opconn(j?static_cast<conn *>(j)->modify(nullptr,T,m1):new tagged(T,m1,m2),$$,S);})?
+bridi_tail_3	<- s:selbri t:tail_terms {$$=new bridi(s,t);} / t:gek_sentence {$$=t;}
+gek_sentence	<- j:gek S:subsentence m1:GI N:NAI? t:subsentence tt:tail_terms {$$=new opconn(static_cast<conn *>(j)->modify(N,nullptr,m1),S,t);/*append tt to each bridi_tail in each subsentence */}
+		 / t:tag? m1:KE s:gek_sentence m2:KEhE? {$$=new tagged(t,s,m1,m2);}
+		 / t:NA s:gek_sentence {$$=new tagged(t,s);}
+tail_terms	<- t:terms? m1:VAU? {$$=m1?new miscvalsi(t,m1):t;}
+terms		<- S:terms_1 {$$=S;} (t:terms_1 {$$=new opconn(nullptr,$$,t);})*
+terms_1		<- S:terms_2 {$$=S;} (m1:PEhE j:joik_jek t:terms_2 {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,nullptr,m1),$$,t);})*
+terms_2		<- S:term {$$=S;} (m1:CEhE t:term {$$=new opconn(m1,$$,t);})*
+term		<- s:sumti {$$=new term(nullptr,s);}
+		 / (t:tag / t:FA) (s:sumti / s:KU?) {$$=new term(t,s);}
+		 / s:termset {$$=s;/*?*/}
+		 / N:NA K:KU {$$=new term(N,K);}
+termset		<- m2:NUhI j:gek S:terms m3:NUhU? m1:GI N:NAI? t:terms m4:NUhU? {$$=new opconn(static_cast<conn *>(j)->modify(N,nullptr,m1,m2,m3,m4),S,t);}
+		 / m1:NUhI t:terms m2:NUhU? {$$=new miscvalsi(t,m1,m2);}
+sumti		<- s:sumti_1 (v:VUhO rc:relative_clauses)? {$$=v?new tagged(rc,s,v):s;}
+sumti_1		<- t:sumti_2 {$$=t;} (j:joik_ek T:stag? m1:KE S:sumti m2:KEhE? {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1,m2),$$,S);})?
+sumti_2		<- S:sumti_3 {$$=S;} (j:joik_ek t:sumti_3 {$$=new opconn(j,$$,t);})*
+sumti_3		<- t:sumti_4 {$$=t;} (j:joik_ek T:stag? m1:BO S:sumti_3 {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1),$$,S);})?
 sumti_4		<- t:sumti_5 {$$=t;}
-		 / j:gek S:sumti m1:GI N:NAI t:sumti_4 {$$=new opconn(j->modify(N,NULL,m1),S,t);}
-sumti_5		<- quantifier? sumti_6 relative_clauses? 
-		 / quantifier selbri KU? relative_clauses?
-sumti_6		<- (LAhE / NAhE BO) relative_clauses? sumti LUhU? 
-		 / KOhA
-		 / lerfu_string BOI?
-		 / LA relative_clauses? CMENE+
-		 / (LA / LE) sumti_tail KU?
-		 / LI mex LOhO? 
-		 / ZO any_word
-		 / LU text LIhU?
-		 / LOhU any_word+ LEhU 
-		 / ZOI <any_word> <(!($1).)*> $1
-sumti_tail	<- (sumti_6 relative_clauses?)? sumti_tail_1 
-		 / relative_clauses sumti_tail_1
-sumti_tail_1	<- quantifier? selbri relative_clauses? / quantifier sumti
-relative_clauses<- relative_clauses ZIhE relative_clause
-		 / t:relative_clause {$$=t;}
-relative_clause	<- GOI term GEhU? / NOI subsentence KUhO?
+		 / j:gek S:sumti m1:GI N:NAI? t:sumti_4 {$$=new opconn(static_cast<conn *>(j)->modify(N,nullptr,m1),S,t);}
+sumti_5		<- q:quantifier? s:sumti_6 c:relative_clauses? {$$=new sumti(s,q,c);}
+		 / q:quantifier s:selbri m1:KU? c:relative_clauses? {$$=new sumti(new description(new valsi(nullptr,"lo"),selbri,nullptr,nullptr,m1),q,c);}
+sumti_6		<- (t:LAhE / t:NAhE m1:BO) cl:relative_clauses? s:sumti m2:LUhU? {$$=new tagged(t,s/*cl will be merged with s subtree*/,m1,m2);}
+		 / t:KOhA {$$=t;}
+		 / l:lerfu_string B:BOI? {$$=static_cast<lerfustr *>(l)->append(nullptr,B);}
+		 / d:LA c:relative_clauses? s:cmene {$$=new description(d,s,nullptr,c);}
+		 / (d:LA / d:LE) s:sumti_tail m1:KU? {$$=static_cast<descrtiption *>(s)->modify(d,m1);}
+		 / L:LI m:mex m1:LOhO? {$$=new tagged(L,m,m1);}
+		 / t:ZO s:any_word {$$=new miscvalsi(s,t);}
+		 / t:LU s:text m1:LIhU? {$$=new miscvalsi(s,t,m1);}
+		 / LOhU any_word+ LEhU {}
+		 / ZOI <any_word> <(!($1).)*> $1 {/*$$=new tagged(z,);*/}
+sumti_tail	<- (s6:sumti_6 c:relative_clauses?)? s:sumti_tail_1 {$$=s6?static_cast<description *>(s)->appendrc(new tagged(new valsi(nullptr,"pe"),new sumti(s6,nullptr,c))):s;}
+		 / c:relative_clauses s:sumti_tail_1 {$$=static_cast<description *>(s)->appendrc(s,c);}
+sumti_tail_1	<- q:quantifier? s:selbri c:relative_clauses? {$$=new description(nullptr,s,q,c);}
+		 / q:quantifier s:sumti {$$=new description(nullptr,s,q);}
+relative_clauses<- S:relative_clause {$$=S;} (m1:ZIhE t:relative_clause {$$=new opconn(m1,$$,t);})*
+relative_clause	<- (t:GOI s:term m1:GEhU? / t:NOI s:subsentence m1:KUhO?) {$$=new tagged(t,s,m1);}
 selbri		<- t:tag? s:selbri_1 {$$=t?new tagged(t,s):s;}
 selbri_1	<- s:selbri_2 {$$=s;}
 		 / N:NA s:selbri {$$=new tagged(N,s);}
-selbri_2	<- t:selbri_3 m1:CO S:selbri_2 {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),S,t);}
-		 / t:selbri_3 {$$=t;}
-selbri_3	<- S:selbri_3 t:selbri_4 {$$=new opconn(NULL,S,t);}
-		 / t:selbri_4 {$$=t;}
-selbri_4	<- S:selbri_4 j:joik_jek t:selbri_5 {$$=new opconn(j,S,t);} 
-		 / t:selbri_4 j:joik T:stag? m1:KE S:selbri_3 m2:KEhE? {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
-		 / t:selbri_5 {$$=t;}
-selbri_5	<- t:selbri_6 (j:jek / j:joik) T:stag? m1:BO S:selbri_5 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
-		 / t:selbri_6 {$$=t;}
-selbri_6	<- t:tanru_unit m1:BO S:selbri_6 {$$=new opconn(new conn(NULL,NULL,NULL,NULL,NULL,m1),t,S);}
-		 / NAhE? guhek selbri m1:GI N:NAI selbri_6
+selbri_2	<- t:selbri_3 {$$=t;} (m1:CO S:selbri_2 {$$=new opconn(m1,$$,S);})?
+selbri_3	<- S:selbri_4 {$$=S;} (t:selbri_4 {$$=new opconn(nullptr,$$,t);})*
+selbri_4	<- S:selbri_5 {$$=S;} (j:joik_jek t:selbri_5 {$$=new opconn(j,$$,t);} / j:joik T:stag? m1:KE t:selbri_3 m2:KEhE? {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1,m2),$$,t);})*
+selbri_5	<- t:selbri_6 {$$=t;} (j:joik_jek T:stag? m1:BO S:selbri_5 {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1),$$,S);})?
+selbri_6	<- t:tanru_unit {$$=t;} (m1:BO S:selbri_6 {$$=new opconn(m1,$$,S);})?
+		 / n:NAhE? j:guhek S:selbri m1:GI N:NAI? t:selbri_6 {ast *node=new opconn(static_cast<conn *>(j)->modify(N,nullptr,m1),S,t); $$=n?new tagged(n,node):node;}
 		 / t:tanru_unit {$$=t;}
-tanru_unit	<- tanru_unit CEI tanru_unit_1
-		 / t:tanru_unit_1 {$$=t;}
-tanru_unit_1	<- tanru_unit_2 linkargs?
-tanru_unit_2	<- BRIVLA 
-		 / g:GOhA r:RAhO? 
-		 / KE selbri_3 KEhE? 
-		 / ME sumti MEhU? MOI? / (number / lerfu_string) MOI 
-		 / NUhA mex_operator
+tanru_unit	<- S:tanru_unit_1 {$$=S;} (m1:CEI t:tanru_unit_1 {$$=new opconn(m1,$$,t);})*
+tanru_unit_1	<- t:tanru_unit_2 l:linkargs? {$$=new tanru(t,l);}
+tanru_unit_2	<- t:BRIVLA {$$=t;}
+		 / g:GOhA r:RAhO? {$$=r?new tagged(r,g):g;}
+		 / m1:KE s:selbri_3 m2:KEhE? {$$=new tagged(nullptr,s,m1,m2);}
+		 / m1:ME s:sumti m2:MEhU? M:MOI? {$$=new tagged(M,s,m1,m2);}
+		 / (n:number / n:lerfu_string) M:MOI {$$=new tagged(M,n);}
+		 / N:NUhA m:mex_operator {$$=new tagged(nullptr,m,N);}
 		 / N:SE s:tanru_unit_2 {$$=new tagged(N,s);}
-		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);} 
-		 / any_word (ZEI any_word)+
+		 / m1:JAI N:tag? s:tanru_unit_2 {$$=new tagged(N,s,m1);}
+		 / any_word (ZEI any_word)+ {}
 		 / N:NAhE s:tanru_unit_2 {$$=new tagged(N,s);}
-		 / nu subsentence KEI?
-nu		<- nu joik_jek NU NAI? 
-		 / NU NAI?
-linkargs	<- BE term links? BEhO?
-links		<- BEI term links?
-quantifier	<- number BOI? / VEI mex VEhO?
-mex		<- m:mex_0 {$$=m;}
-		 / FUhA rp_expression
-mex_0		<- S:mex_0 j:operator t:mex_1 {$$=new opconn(j,S,t);}
-		 / t:mex_1 {$$=t;}
-mex_1		<- t:mex_2 m1:BIhE j:operator S:mex_1 {$$=new opconn(j->modify(NULL,NULL,m1),t,S);}
-		 / t:mex_2 {$$=t;}
+		 / t:nu s:subsentence m1:KEI? {$$=new tagged(t,s,m1);}
+nu		<- S:NU T:NAI? {$$=T?new tagged(T,S):S;} (j:joik_jek s:NU t:NAI? {$$=new opconn(j,$$,t?new tagged(t,s):s);})*
+linkargs	<- m1:BE l:links m2:BEhO? {$$=new miscvalsi(l,m1,m2);}
+links		<- t:term {$$=t;} (m1:BEI S:links {$$=new opconn(m1,$$,S);})?
+quantifier	<- l:number B:BOI? {$$=static_cast<number *>(l)->append(nullptr,B);} / m1:VEI s:mex m2:VEhO? {$$=new miscvalsi(s,m1,m2);}
+mex		<- S:mex_1 {$$=S;} (j:operator t:mex_1 {$$=new opconn(j,$$,t);})*
+		 / f:FUhA s:rp_expression {$$=new miscvalsi(s,f);}
+mex_1		<- t:mex_2 {$$=t;} (m1:BIhE j:operator S:mex_1 {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,nullptr,m1),$$,S);})?
 mex_2		<- t:operand {$$=t;}
-		 / PEhO? operator mex_2A KUhE?
-mex_2A		<- S:mex_2A t:mex_2 {$$=new opconn(NULL,S,t);}
-		 / t:mex_2 {$$=t;}
+		 / PEhO? operator mex_2A KUhE? {}
+mex_2A		<- S:mex_2 {$$=S;} (t:mex_2 {$$=new opconn(nullptr,$$,t);})*
 rp_expression	<- S:rp_operand t:rp_operand j:operator {$$=new opconn(j,S,t);}
 rp_operand	<- t:operand {$$=t;}
 		 / t:rp_expression {$$=t;}
-operator	<- S:operator j:joik_jek t:operator_1 {$$=new opconn(j,S,t);}
-		 / t:operator j:joik T:stag? m1:KE S:operator m2:KEhE? {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
-		 / t:operator_1 {$$=t;}
-operator_1	<- guhek operator_1 m1:GI N:NAI operator_2 
-		 / t:operator_2 (j:jek / j:joik) T:stag? m1:BO S:operator_1 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
-		 / t:operator_2 {$$=t;}
-operator_2	<- mex_operator / KE operator KEhE?
+operator	<- S:operator_1 {$$=S;} (j:joik_jek t:operator_1 {$$=new opconn(j,$$,t);} / j:joik T:stag? m1:KE S:operator m2:KEhE? {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1,m2),t,S);})*
+operator_1	<- t:operator_2 {$$=t;}
+		 / j:guhek S:operator_1 m1:GI N:NAI? t:operator_2 {$$=new opconn(static_cast<conn *>(j)->modify(N,nullptr,m1),S,t);}
+		 / t:operator_2 j:joik_jek T:stag? m1:BO S:operator_1 {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1),t,S);}
+operator_2	<- t:mex_operator {$$=t;} / m1:KE s:operator m2:KEhE? {$$=new tagged(nullptr,s,m1,m2);}
 mex_operator	<- (N:SE / N:NAhE) s:mex_operator {$$=new tagged(N,s);}
-		 / MAhO mex TEhU? / NAhU selbri TEhU? / VUhU
-operand		<- t:operand_1 (j:ek / j:joik) T:stag? m1:KE S:operand m2:KEhE?  {$$=new opconn(j->modify(NULL,T,m1,m2),t,S);}
-		 / t:operand_1 {$$=t;}
-operand_1	<- S:operand_1 j:joik_ek t:operand_2 {$$=new opconn(j,S,t);}
-		 / t:operand_2 {$$=t;}
-operand_2	<- t:operand_3 (j:ek / j:joik) T:stag? m1:BO S:operand_2 {$$=new opconn(j->modify(NULL,T,m1),t,S);}
-		 / t:operand_3 {$$=t;}
-operand_3	<- quantifier / lerfu_string BOI? 
-		 / NIhE selbri TEhU? / MOhE sumti TEhU? 
-		 / JOhI mex_2A TEhU? / gek operand m1:GI N:NAI operand_3 
-		 / (LAhE / NAhE BO fm?) operand LUhU?
-number		<- number (PA / lerfu_word) / PA
-lerfu_string	<- lerfu_string (PA / lerfu_word) / lerfu_word
-lerfu_word	<- BY / any_word BU / LAU lerfu_word / TEI lerfu_string FOI
-ek		<- N:NA? S:SE? J:A NI:NAI? {$$=new conn(N,S,NI,J,NULL,NULL);}
-gihek		<- NA? SE? GIhA NAI? {$$=new conn(N,S,NI,J,NULL,NULL);}
-jek		<- N:NA? S:SE? J:JA NI:NAI? {$$=new conn(N,S,NI,J,NULL,NULL);}
-joik		<- S:SE? J:JOI NI:NAI? {$$=new conn(NULL,S,NI,J,NULL,NULL);}
-		 / S:SE? J:BIhI NI:NAI? {$$=new conn(NULL,S,NI,J,NULL,NULL);}
-		 / m1:GAhO S:SE? J:BIhI NI:NAI? m2:GAhO {$$=new conn(NULL,S,NI,J,NULL,NULL,m1,m2);}
+		 / T:MAhO s:mex m1:TEhU? {$$=new tagged(T,s,m1);} / T:NAhU s:selbri m1:TEhU? {$$=new tagged(T,s,m1);} / t:VUhU {$$=t;}
+operand		<- t:operand_1 {$$=new operand(t);} (j:joik_ek T:stag? m1:KE S:operand m2:KEhE?  {$$=new operand(new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1,m2),$$,S));})?
+operand_1	<- S:operand_2 {$$=S;} (j:joik_ek t:operand_2 {$$=new opconn(j,$$,t);})*
+operand_2	<- t:operand_3 {$$=t;} (j:joik_ek T:stag? m1:BO S:operand_2 {$$=new opconn(static_cast<conn *>(j)->modify(nullptr,T,m1),$$,S);})?
+operand_3	<- q:quantifier {$$=q;}
+		 / l:lerfu_string B:BOI? {$$=static_cast<lerfustr *>(l)->append(nullptr,B);}
+		 / (t:NIhE s:selbri m1:TEhU? / t:MOhE s:sumti m1:TEhU? / t:JOhI s:mex_2A m1:TEhU?) {$$=new miscvalsi(s,t,m1);}
+		 / j:gek S:operand m1:GI N:NAI? t:operand_3 {$$=new opconn(static_cast<conn *>(j)->modify(N,nullptr,m1),S,t);}
+		 / (t:LAhE / t:NAhE m1:BO) s:operand m2:LUhU? {$$=new tagged(t,s,m1,m2);}
+number		<- p:PA {$$=new number(p);} ((p:PA / p:lerfu_word) {$$=static_cast<number *>($$)->append(p);})*
+lerfu_string	<- p:lerfu_word {$$=new lerfustr(p);} ((p:PA / p:lerfu_word) {$$=static_cast<lerfustr *>($$)->append(p);})*
+lerfu_word	<- B:BY {$$=new lerfu(B);} / B:any_word m1:BU {$$=new lerfu(B,nullptr,m1);} / m:LAU B:lerfu_word {$$=new lerfu(B,m);} / m:TEI B:lerfu_string m1:FOI {$$=new lerfu(B,m,m1);}
+ek		<- N:NA? S:SE? J:A NI:NAI? {$$=new conn(N,S,NI,J,nullptr,nullptr);}
+gihek		<- NA? SE? GIhA NAI? {$$=new conn(N,S,NI,J,nullptr,nullptr);}
+jek		<- N:NA? S:SE? J:JA NI:NAI? {$$=new conn(N,S,NI,J,nullptr,nullptr);}
+joik		<- S:SE? J:JOI NI:NAI? {$$=new conn(nullptr,S,NI,J,nullptr,nullptr);}
+		 / S:SE? J:BIhI NI:NAI? {$$=new conn(nullptr,S,NI,J,nullptr,nullptr);}
+		 / m1:GAhO S:SE? J:BIhI NI:NAI? m2:GAhO {$$=new conn(nullptr,S,NI,J,nullptr,nullptr,m1,m2);}
 joik_ek		<- (j:joik / j:ek) {$$=j;}
 joik_jek	<- (j:joik / j:jek) {$$=j;}
-gek		<- S:SE? J:GA N:NAI? {$$=new conn(N,S,NULL,J,NULL);}
-		 / J:joik m1:GI {$$=new conn(NULL,NULL,NULL,J,NULL,m1);}
-		 / T:stag m1:GI N:NAI {$$=new conn(NULL,NULL,NULL,NULL,T,m1);} 
-guhek		<- S:SE? J:GUhA N:NAI? {$$=new conn(N,S,NULL,J,NULL);}
-tag		<- S:tag j:joik_jek t:tense_modal {$$=new opconn(j,S,t);}
-		 / t:tense_modal {$$=t;}
-stag		<- S:stag (j:jek / j:joik) t:stense_modal {$$=new opconn(j,S,t);}
-		 / t:stense_modal {$$=t;}
-tense_modal	<- stense_modal / FIhO selbri FEhU?
-stense_modal	<- NAhE? SE? BAI NAI? KI? 
-		 / NAhE? ((time space? / space time?) CAhA / (time space? / space time?) / CAhA) KI? / KI / CUhE
-time		<- ZI & time_offset+ & ZEhA (PU NAI?)? & interval_prop+
-time_offset	<- PU NAI? ZI?
-space		<- VA & space_offset+ & space_interval & (MOhI space_offset)
-space_offset	<- FAhA NAI? VA?
-space_interval	<- ((VEhA & VIhA) (FAhA NAI?)?) & space_int_props
-space_int_props	<- (FEhE interval_prop)+
-interval_prop	<- number ROI NAI? / TAhE NAI? / ZAhO NAI?
-free		<- SEI (terms CU?)? selbri SEhU? / SOI sumti sumti? SEhU? 
-		 / vocative relative_clauses? selbri relative_clauses? DOhU? 
-		 / vocative relative_clauses? CMENE+ relative_clauses? DOhU? 
-		 / vocative sumti? DOhU? / (number / lerfu_string) MAI 
-		 / TO text TOI?
-		 / XI (number / lerfu_string) BOI? / XI VEI mex VEhO?
-vocative	<- (COI NAI?)+ & DOI
-indicators	<- FUhE? indicator+
-indicator	<-  (UI / CAI) NAI? / Y / DAhO / FUhO / free
+gek		<- S:SE? J:GA N:NAI? {$$=new conn(N,S,nullptr,J,nullptr);}
+		 / J:joik m1:GI {$$=new conn(nullptr,nullptr,nullptr,J,nullptr,m1);}
+		 / T:stag m1:GI N:NAI? {$$=new conn(nullptr,nullptr,nullptr,nullptr,T,m1);}
+guhek		<- S:SE? J:GUhA N:NAI? {$$=new conn(N,S,nullptr,J,nullptr);}
+tag		<- S:tense_modal {$$=S;} (j:joik_jek t:tense_modal {$$=new opconn(j,$$,t);})*
+stag		<- S:stense_modal {$$=S;} (j:joik_jek t:stense_modal {$$=new opconn(j,$$,t);})*
+tense_modal	<- t:stense_modal {$$=t;} / m1:FIhO s:selbri m2:FEhU? {$$=new miscvalsi(s,m1,m2);}
+stense_modal	<- N:NAhE? s:SE? b:BAI n:NAI? k:KI? {ast *m=new modal(s,b,n,k); $$=N?new taggged(N,m):m;}
+		 / N:NAhE? ((t:time s:space? / s:space t:time?) c:CAhA / (t:time s:space? / s:space t:time?) / c:CAhA) k:KI? {ast *tense=new tense(t,s,c,k);$$=N?new tagged(N,tense):tense;}
+		 / (k:KI / k:CUhE) {$$=k;}
+time		<- ( d:ZI  o:time_offset? i:time_interval?
+		   / d:ZI? o:time_offset  i:time_interval?
+		   / d:ZI? o:time_offset? i:time_interval  ) {$$=new tst(d,o,i);}
+time_offset	<- P:PU N:NAI? Z:ZI? {$$=new offset(P,N,Z);} (S:time_offset {$$=new opconn(nullptr,$$,S);})?
+time_interval	<- ( (z:ZEhA (p:PU n:NAI?)?)? i:intprops
+		   / (z:ZEhA (p:PU n:NAI?)?) i:intprops? ) {$$=new interval(z,p,n,i);}
+intprops	<- i:interval_prop {$$=i;} (S:intprops {$$=new opconn(nullptr,$$,S);})?
+space		<- ( d:VA? o:space_offset? i:space_interval? (m:MOhI p:FAhA n:NAI? z:VA?)
+		   / d:VA? o:space_offset? i:space_interval  (m:MOhI p:FAhA n:NAI? z:VA?)?
+		   / d:VA? o:space_offset  i:space_interval? (m:MOhI p:FAhA n:NAI? z:VA?)?
+		   / d:VA  o:space_offset? i:space_interval? (m:MOhI p:FAhA n:NAI? z:VA?)?) {$$=new tst(d,o,i,new offset(p,n,z,m));}
+space_offset	<- P:FAhA N:NAI? Z:VA? {$$=new offset(P,N,Z);} (S:space_offset {$$=new opconn(nullptr,$$,S);})?
+space_interval	<- ( ((z:VEhA v:VIhA? / z:VEhA? v:VIhA) (p:FAhA n:NAI?)?)? i:sintprops
+		   / ((z:VEhA v:VIhA? / z:VEhA? v:VIhA) (p:FAhA n:NAI?)?) i:sintprops? ) {$$=new interval(z,p,n,i,v);}
+sintprops	<- (f:FEhE i:interval_prop) {$$=static_cast<intprop *>(i)->modify(f);} (S:sintprops {$$=new opconn(nullptr,$$,S);})?
+interval_prop	<- (num:number p:ROI n:NAI? / p:TAhE n:NAI? / p:ZAhO n:NAI?) {$$=new interprop(p,n,num);}
+free		<- m2:SEI (t:terms m1:CU?)? s:selbri m3:SEhU? {ast *S=new bridi(s,nullptr); $$=new miscvalsi(t?new tagged(t,S,m1):S,m2,m3);}
+		 / SOI sumti sumti? SEhU? {}
+		 / v:vocative r1:relative_clauses? selbri r2:relative_clauses? m1:DOhU? {$$=new tagged(v,,m1);}
+		 / v:vocative r1:relative_clauses? cmene r2:relative_clauses? m1:DOhU? {$$=new tagged(v,,m1);}
+		 / v:vocative s:sumti? m1:DOhU? {$$=new tagged(v,s,m1);}
+		 / (s:number / s:lerfu_string) t:MAI {$$=new tagged(t,s);}
+		 / T:TO t:text m1:TOI? {$$=new tagged(T,t,m1);}
+		 / m1:XI s:number B:BOI? {$$=new miscvalsi(static_cast<number *>(s)->append(nullptr,B),m1);}
+		 / m1:XI s:lerfu_string B:BOI? {$$=new miscvalsi(static_cast<lerfustr *>(s)->append(nullptr,B),m1);}
+		 / m1:XI m2:VEI s:mex m3:VEhO? {$$=new miscvalsi(new miscvalsi(s,m2,m3),m1);}
+vocative	<- d:DOI {$$=d;}
+		 / (c:COI n:NAI?) {$$=n?new tagged(n,c):c;} (COI NAI? {$$=new opconn(nullptr,$$,N?new tagged(N,C):C);})* d:DOI? {$$=d?new tagged(d,$$):$$;}
+indicators	<- m1:FUhE? S:indicator {$$=S;} (t:indicator {$$=new opconn(nullptr,$$,t);})* {$$=new tagged(m1,$$);}
+indicator	<- (u:UI / u:CAI) n:NAI? {$$=n?new tagged(n,u):u;}
+		 / (t:Y / t:DAhO / t:FUhO / t:free) {$$=t;}
+cmene		<- n:CMENE {$$=new cmene(n);} (c:cmene {$$=(static_cast<cmene *>($$))->append_front(n);})?

@@ -4,10 +4,10 @@
 #___________________________________________________________________%%%
 words <- pause? (word pause?)*
 #word <- lojban_word / non_lojban_word
-#lojban_word <- cmene / cmavo / brivla
+#lojban_word <- CMENE_ / cmavo / brivla
 word <- lojban_word {printf(" - lojban word\n");}
       / non_lojban_word {printf(" - nlw\n");}
-lojban_word <- <cmene> {printf("cmene: %s",$1);}
+lojban_word <- <CMENE_> {printf("cmene: %s",$1);}
              / <cmavo> {printf("cmavo: %s",$2);}
 	     / <BRIVLA_> {printf("brivla: %s",$3);}
 BRIVLA_ <- gismu / fuhivla / lujvo
@@ -17,7 +17,7 @@ zifcme <- !h (nucleus / glide / h / C !pause / digit)* C &pause
 jbocme <- &zifcme (any_syllable / digit)* &pause 
 #___________________________________________________________________
 cmavo <- (glide nucleus / C? (vowel/diphthong) (h (vowel/diphthong))?) !cluster
-#cmavo <- !cmene !CVCy_lujvo cmavo_form &post_word 
+#cmavo <- !CMENE_ !CVCy_lujvo cmavo_form &post_word
 #CVCy_lujvo <- CVC_rafsi y h? initial_rafsi* brivla_core / stressed_CVC_rafsi y short_final_rafsi
 #cmavo_form <- !h !cluster onset (nucleus h)* (!stressed nucleus / nucleus !cluster) / y+ / digit
 #___________________________________________________________________
@@ -58,7 +58,7 @@ CCV_rafsi <- initial_pair unstressed_vowel
 CVV_rafsi <- C (unstressed_vowel h unstressed_vowel / unstressed_diphthong) r_hyphen
 r_hyphen <- r &C / n &r
 #___________________________________________________________________
-final_syllable <-  onset !y !stressed nucleus !cmene &post_word
+final_syllable <-  onset !y !stressed nucleus !CMENE_ &post_word
 stressed_syllable <- &stressed syllable / syllable &stress
 stressed_diphthong <- &stressed diphthong / diphthong &stress
 stressed_vowel <- &stressed vowel / vowel &stress
@@ -125,131 +125,7 @@ space_char <- [.\t\n\r?! ]
 #___________________________________________________________________
 #spaces <- !Y initial_spaces
 #initial_spaces <- (comma* space_char / !ybu Y)+ EOF? / EOF
-#ybu <- Y space_char* BU
+ybu <- Y space_char* BU
 #___________________________________________________________________
 #
-A_cmavo			<- ".a"/".e"/"ji"/".o"/".u"
-BAhE			<- "ba'e"/"za'e"
-BAI_cmavo		<- "du'o"/"si'u"/"zau"/"ki'i"/"du'i"/"cu'u"/"tu'i"/"ti'u"/"di'o"/"ji'u"/"ri'a"/"ni'i"/"mu'i"/"ki'u"/"va'u"/"koi"/"ca'i"/"ta'i"/"pu'e"/"ja'i"/"kai"/"bai"/"fi'e"/"de'i"/"ci'o"/"mau"/"mu'u"/"ri'i"/"ra'i"/"ka'a"/"pa'u"/"pa'a"/"le'a"/"ku'u"/"tai"/"bau"/"ma'i"/"ci'e"/"fau"/"po'i"/"cau"/"ma'e"/"ci'u"/"ra'a"/"pu'a"/"li'e"/"la'u"/"ba'i"/"ka'i"/"sau"/"fa'e"/"be'i"/"ti'i"/"ja'e"/"ga'a"/"va'o"/"ji'o"/"me'a"/"do'e"/"ji'e"/"pi'o"/"gau"/"zu'e"/"me'e"/"rai"
-BE_cmavo		<- "be"
-BEhO_cmavo		<- "be'o"
-BEI_cmavo		<- "bei"
-BIhE_cmavo		<- "bi'e"
-BIhI_cmavo		<- "mi'i"/"bi'o"/"bi'i"
-BO_cmavo		<- "bo"
-BOI_cmavo		<- "boi"
-#BRIVLA_		<- 
-BU_cmavo		<- "bu"
-BY_cmavo		<- "ybu"/"jo'o"/"ru'o"/"ge'o"/"je'o"/"lo'a"/"na'a"/"se'e"/"to'a"/"ga'e"/"y'y"/"by"/"cy"/"dy"/"fy"/"gy"/"jy"/"ky"/"ly"/"my"/"ny"/"py"/"ry"/"sy"/"ty"/"vy"/"xy"/"zy"
-CAhA_cmavo		<- "ca'a"/"pu'i"/"nu'o"/"ka'e"
-CAI_cmavo		<- "pei"/"cai"/"cu'i"/"sai"/"ru'e"
-CEhE_cmavo		<- "ce'e"
-CEI_cmavo		<- "cei"
-#CMENE_			<- 
-CO_cmavo		<- "co"
-COI_cmavo		<- "ju'i"/"coi"/"fi'i"/"ta'a"/"mu'o"/"fe'o"/"co'o"/"pe'u"/"ke'o"/"nu'e"/"re'i"/"be'e"/"je'e"/"mi'e"/"ki'e"/"vi'o"
-CU_cmavo		<- "cu"
-CUhE_cmavo		<- "cu'e"/"nau"
-DAhO_cmavo		<- "da'o"
-DOhU_cmavo		<- "do'u"
-DOI_cmavo		<- "doi"
-FA_cmavo		<- "fai"/"fa"/"fe"/"fo"/"fu"/"fi'a"/"fi"
-FAhA_cmavo		<- "du'a"/"be'a"/"ne'u"/"vu'a"/"ga'u"/"ti'a"/"ni'a"/"ca'u"/"zu'a"/"ri'u"/"ru'u"/"re'o"/"te'e"/"bu'u"/"ne'a"/"pa'o"/"ne'i"/"to'o"/"zo'i"/"ze'o"/"zo'a"/"fa'a"
-FAhO_cmavo		<- "fa'o"
-FEhE_cmavo		<- "fe'e"
-FEhU_cmavo		<- "fe'u"
-FIhO_cmavo		<- "fi'o"
-FOI_cmavo		<- "foi"
-FUhA_cmavo		<- "fu'a"
-FUhE_cmavo		<- "fu'e"
-FUhO_cmavo		<- "fu'o"
-GA_cmavo		<- "ge'i"/"ge"/"go"/"ga"/"gu"
-GAhO_cmavo		<- "ke'i"/"ga'o"
-GEhU_cmavo		<- "ge'u"
-GI_cmavo		<- "gi"
-GIhA_cmavo		<- "gi'e"/"gi'i"/"gi'o"/"gi'a"/"gi'u"
-GOhA_cmavo		<- "mo"/"nei"/"go'u"/"go'o"/"go'i"/"no'a"/"go'e"/"go'a"/"du"/"bu'a"/"bu'e"/"bu'i"/"co'e"
-GOI_cmavo		<- "no'u"/"ne"/"goi"/"po'u"/"pe"/"po'e"/"po"
-GUhA_cmavo		<- "gu'e"/"gu'i"/"gu'o"/"gu'a"/"gu'u"
-I_cmavo			<- ".i"
-JA_cmavo		<- "je'i"/"je"/"jo"/"ja"/"ju"
-JAI_cmavo		<- "jai"
-JOhI_cmavo		<- "jo'i"
-JOI_cmavo		<- "fa'u"/"pi'u"/"joi"/"ce'o"/"ce"/"jo'u"/"ku'a"/"jo'e"/"ju'e"
-KE_cmavo		<- "ke"
-KEhE_cmavo		<- "ke'e"
-KEI_cmavo		<- "kei"
-KI_cmavo		<- "ki"
-KOhA_cmavo		<- "da'u"/"da'e"/"di'u"/"di'e"/"de'u"/"de'e"/"dei"/"do'i"/"mi'o"/"ma'a"/"mi'a"/"do'o"/"ko'a"/"fo'u"/"ko'e"/"ko'i"/"ko'o"/"ko'u"/"fo'a"/"fo'e"/"fo'i"/"fo'o"/"vo'a"/"vo'e"/"vo'i"/"vo'o"/"vo'u"/"ru"/"ri"/"ra"/"ta"/"tu"/"ti"/"zi'o"/"ke'a"/"ma"/"zu'i"/"zo'e"/"ce'u"/"da"/"de"/"di"/"ko"/"mi"/"do"
-KU_cmavo		<- "ku"
-KUhE_cmavo		<- "ku'e"
-KUhO_cmavo		<- "ku'o"
-LA_cmavo		<- "lai"/"la'i"/"la"
-LAhE_cmavo		<- "tu'a"/"lu'a"/"lu'o"/"la'e"/"vu'i"/"lu'i"/"lu'e"
-LAU_cmavo		<- "ce'a"/"lau"/"zai"/"tau"
-LE_cmavo		<- "lei"/"loi"/"le'i"/"lo'i"/"le'e"/"lo'e"/"lo"/"le"
-LEhU_cmavo		<- "le'u"
-LI_cmavo		<- "me'o"/"li"
-LIhU_cmavo		<- "li'u"
-LOhO_cmavo		<- "lo'o"
-LOhU_cmavo		<- "lo'u"
-LU_cmavo		<- "lu"
-LUhU_cmavo		<- "lu'u"
-MAhO_cmavo		<- "ma'o"
-MAI_cmavo		<- "mo'o"/"mai"
-ME_cmavo		<- "me"
-MEhU_cmavo		<- "me'u"
-MOhE_cmavo		<- "mo'e"
-MOhI_cmavo		<- "mo'i"
-MOI_cmavo		<- "mei"/"moi"/"si'e"/"cu'o"/"va'e"
-NA_cmavo		<- "ja'a"/"na"
-NAhE_cmavo		<- "to'e"/"je'a"/"na'e"/"no'e"
-NAhU_cmavo		<- "na'u"
-NAI_cmavo		<- "nai"
-NIhE_cmavo		<- "ni'e"
-NIhO_cmavo		<- "ni'o"/"no'i"
-NOI_cmavo		<- "voi"/"noi"/"poi"
-NU_cmavo		<- "ni"/"du'u"/"si'o"/"nu"/"li'i"/"ka"/"jei"/"su'u"/"zu'o"/"mu'e"/"pu'u"/"za'i"
-NUhA_cmavo		<- "nu'a"
-NUhI_cmavo		<- "nu'i"
-NUhU_cmavo		<- "nu'u"
-PA_cmavo		<- "dau"/"fei"/"gai"/"jau"/"rei"/"vai"/"pi'e"/"pi"/"fi'u"/"za'u"/"me'i"/"ni'u"/"ki'o"/"ce'i"/"ma'u"/"ra'e"/"da'a"/"so'a"/"ji'i"/"su'o"/"su'e"/"ro"/"rau"/"so'u"/"so'i"/"so'e"/"so'o"/"mo'a"/"du'e"/"te'o"/"ka'o"/"ci'i"/"tu'o"/"xo"/"pai"/"no'o"/"no"/"pa"/"re"/"ci"/"vo"/"mu"/"xa"/"ze"/"bi"/"so"
-PEhE_cmavo		<- "pe'e"
-PEhO_cmavo		<- "pe'o"
-PU_cmavo		<- "pu"/"ca"/"ba"
-RAhO_cmavo		<- "ra'o"
-ROI_cmavo		<- "roi"/"re'u"
-SA_cmavo		<- "sa"
-SE_cmavo		<- "se"/"te"/"ve"/"xe"
-SI_cmavo		<- "si"
-SU_cmavo		<- "su"
-SEhU_cmavo		<- "se'u"
-SEI_cmavo		<- "sei"/"ti'o"
-SOI_cmavo		<- "soi"
-TAhE_cmavo		<- "ru'i"/"ta'e"/"di'i"/"na'o"
-TEhU_cmavo		<- "te'u"
-TEI_cmavo		<- "tei"
-TO_cmavo		<- "to'i"/"to"
-TOI_cmavo		<- "toi"
-TUhE_cmavo		<- "tu'e"
-TUhU_cmavo		<- "tu'u"
-UI_cmavo		<- ".i'a"/".ie"/".a'e"/".u'i"/".i'o"/".i'e"/".a'a"/".ia"/".o'i"/".o'e"/".e'e"/".oi"/".uo"/".e'i"/".u'o"/".au"/".ua"/".a'i"/".i'u"/".ii"/".u'a"/".ui"/".a'o"/".ai"/".a'u"/".iu"/".ei"/".o'o"/".e'a"/".uu"/".o'a"/".o'u"/".u'u"/".e'o"/".io"/".e'u"/".ue"/".i'i"/".u'e"/"ba'a"/"ja'o"/"ca'e"/"su'a"/"ti'e"/"ka'u"/"se'o"/"za'a"/"pe'i"/"ru'a" /"ju'a"/"ta'o"/"ra'u"/"li'a"/"ba'u"/"mu'a"/"do'a"/"to'u"/"va'i"/"pa'e"/"zu'u"/"sa'e"/"la'a"/"ke'u"/"sa'u"/"da'i"/"je'u"/"sa'a"/"kau"/"ta'u"/"na'i"/"jo'a"/"bi'u"/"li'o"/"pau"/"mi'u"/"ku'i"/"ji'a"/"si'a"/"po'o"/"pe'a"/"ro'i"/"ro'e"/"ro'o"/"ro'u"/"ro'a"/"re'e"/"le'o"/"ju'o"/"fu'i"/"dai"/"ga'i"/"zo'o"/"be'u"/"ri'e"/"se'i"/"se'a"/"vu'e"/"ki'a"/"xu"/"ge'e"/"bu'o"
-VA_cmavo		<- "vi"/"va"/"vu"
-VAU_cmavo		<- "vau"
-VEhA_cmavo		<- "ve'u"/"ve'a"/"ve'i"/"ve'e"
-VEhO_cmavo		<- "ve'o"
-VEI_cmavo		<- "vei"
-VIhA_cmavo		<- "vi'i"/"vi'a"/"vi'u"/"vi'e"
-VUhO_cmavo		<- "vu'o"
-VUhU_cmavo		<- "ge'a"/"fu'u"/"pi'i"/"fe'i"/"vu'u"/"su'i"/"ju'u"/"gei"/"pa'i"/"fa'i"/"te'a"/"cu'a"/"va'a"/"ne'o"/"de'o"/"fe'a"/"sa'o"/"re'a"/"ri'o"/"sa'i"/"pi'a"/"si'i"
-XI_cmavo		<- "xi"
-Y_cmavo			<- 'y'+
-ZAhO_cmavo		<- "co'i"/"pu'o"/"co'u"/"mo'u"/"ca'o"/"co'a"/"de'a"/"ba'o"/"di'a"/"za'o"
-ZEhA_cmavo		<- "ze'u"/"ze'a"/"ze'i"/"ze'e"
-ZEI_cmavo		<- "zei"
-ZI_cmavo		<- "zi"/"za"/"zu"
-ZIhE_cmavo		<- "zi'e"
-ZO_cmavo		<- "zo"
-ZOhU_cmavo		<- "zo'u"
-ZOI_cmavo		<- "zoi"/"la'o"
 
