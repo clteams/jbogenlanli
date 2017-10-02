@@ -89,10 +89,10 @@ PEhO		<- <BAhE?> pause? !ZEI !BU <PEhO_cmavo> pause? !ZEI !BU ind:indicators? {$
 PU		<- <BAhE?> pause? !ZEI !BU <PU_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
 RAhO		<- <BAhE?> pause? !ZEI !BU <RAhO_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
 ROI		<- <BAhE?> pause? !ZEI !BU <ROI_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
-SA		<- <BAhE?> pause? !ZEI !BU <SA_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
+#SA		<- <BAhE?> pause? !ZEI !BU <SA_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
 SE		<- <BAhE?> pause? !ZEI !BU <SE_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
-SI		<- <BAhE?> pause? !ZEI !BU <SI_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
-SU		<- <BAhE?> pause? !ZEI !BU <SU_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
+#SI		<- <BAhE?> pause? !ZEI !BU <SI_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
+#SU		<- <BAhE?> pause? !ZEI !BU <SU_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
 SEhU		<- <BAhE?> pause? !ZEI !BU <SEhU_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
 SEI		<- <BAhE?> pause? !ZEI !BU <SEI_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}
 SOI		<- <BAhE?> pause? !ZEI !BU <SOI_cmavo> pause? !ZEI !BU ind:indicators? {$$=new valsi($1,$2,ind);}

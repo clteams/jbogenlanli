@@ -2,11 +2,11 @@
 # See [http://www.pdos.lcs.mit.edu/~baford/packrat/] %%%
 # mi'e ((xorxes))%%%
 #___________________________________________________________________%%%
-words <- pause? (word pause?)*
+#words <- pause? (word pause?)*
 #word <- lojban_word / non_lojban_word
 #lojban_word <- CMENE_ / cmavo / brivla
-word <- lojban_word {printf(" - lojban word\n");}
-      / non_lojban_word {printf(" - nlw\n");}
+#word <- lojban_word {printf(" - lojban word\n");}
+#      / non_lojban_word {printf(" - nlw\n");}
 lojban_word <- <CMENE_> {printf("cmene: %s",$1);}
              / <cmavo> {printf("cmavo: %s",$2);}
 	     / <BRIVLA_> {printf("brivla: %s",$3);}
@@ -119,8 +119,8 @@ post_word <- pause / !nucleus lojban_word
 pause <- comma* space_char+ / EOF
 EOF <- comma* !.
 comma <- [,]
-non_lojban_word <- !lojban_word non_space+
-non_space <- !space_char .
+#non_lojban_word <- !lojban_word non_space+
+#non_space <- !space_char .
 space_char <- [.\t\n\r?! ]
 #___________________________________________________________________
 #spaces <- !Y initial_spaces

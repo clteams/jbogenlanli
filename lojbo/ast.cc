@@ -1,5 +1,7 @@
 //#include <stdlib.h>
 //#include <string.h>
+#ifndef __LOJBAN__AST__
+#define __LOJBAN__AST__ 1
 #include <stdarg.h>
 #include "mahoste.h"
 #include <vector>
@@ -25,7 +27,7 @@ class valsi:public ast {
 	std::string ch;
 	ast *inds;
 	public:
-	valsi(const char *const bahecm,const char *const t,ast *_i):cm(dettype(t)),ch(""),inds(_i) {
+	valsi(const char *const bahecm,const char *const t,ast *_i=nullptr):cm(dettype(t)),ch(""),inds(_i) {
 		//if (!bahecm || !strlen(bahecm)) emph=nobz; else emph=static_cast<>(dettype(bahecm));
 		if (cm==cmavo::BRIVLA || cm==cmavo::CMENE) ch=t;
 	}
@@ -106,6 +108,7 @@ class miscvalsi:public ast {
 	ast *subtree;
 	ast *misc1;
 	ast *misc2;
+	public:
 	miscvalsi(ast *_s,ast *_m1,ast *_m2=nullptr):subtree(_s),misc1(_m1),misc2(_m2) {}
 	~miscvalsi() {
 		delete subtree;
@@ -119,17 +122,17 @@ class text:public ast {
 	ast *nai;
 	ast *modifier;
 	ast *jekjoik;
-	ast *text;
+	ast *body;
 	public:
-	text(ast *_n,ast *_m,ast *_j,ast *_t):nai(_n),modifier(_m),jekjoik(_j),text(_t) {}
+	text(ast *_n,ast *_m,ast *_j,ast *_b):nai(_n),modifier(_m),jekjoik(_j),body(_b) {}
 	~text() {
 		delete nai;
 		delete modifier;
 		delete jekjoik;
-		delete text;
+		delete body;
 	}
 	astype type() {return TEXT;}
-}
+};
 
 class cmene:public ast {
 	std::deque<ast *> ll;
@@ -190,7 +193,7 @@ class description:public ast {
 	ast *irelcl;
 	ast *misc1; //for optional KU 
 	public:
-	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(m1) {}
+	description(ast *_d,ast *_a,ast *_q,ast *_c,ast *m1=nullptr):descriptor(_d),arg(_a),iquant(_q),irelcl(_c),misc1(m1) {}
 	~description() {
 		delete descriptor;
 		delete misc1; //for optional KU 
@@ -217,7 +220,7 @@ class tanru:public ast {
 	tanru(ast *_t,ast *_l):tanru_unit2(_t),linkargs(_l) {}
 	~tanru() {
 		delete tanru_unit2;
-		if (linkargs) delete linkargs;
+		delete linkargs;
 	}
 	astype type() {return TANRU;}
 };
@@ -389,16 +392,21 @@ class intprop:public ast {
 
 /* end */
 
+/*
 astype subtreetype(ast *st) {
 	astype t;
 	switch(t=st->type()) {
 		case TAGGED: return subtreetype(st->subtree);
-		case CONN: {
-			astype l=subtreetype(st->left);
-			astype r=subtreetype(st->right);
+		case OPCONN: {
+			astype l=subtreetype(static_cast<opconn *>(st)->left);
+			astype r=subtreetype(static_cast<opconn *>(st)->right);
 			if(l!=r);
 			return l;
 		}
 		default: return t;
 	}
 }
+*/
+
+#endif
+
